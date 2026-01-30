@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Créateur de souvenirs romantiques pour la Saint-Valentin">
-    <title>Créateur de Souvenirs - Saint-Valentin</title>
+    <title>Créateur de Souvenirs Romantiques - Saint-Valentin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
-    
     <style>
         * {
             margin: 0;
@@ -23,30 +20,124 @@
             padding: 20px;
         }
         
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        header {
+        .app-mode-selector {
             text-align: center;
             margin-bottom: 30px;
         }
         
-        h1 {
-            color: #d63384;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
+        .mode-btn {
+            background: #ff4d8d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            margin: 0 10px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
         }
         
-        .subtitle {
-            color: #9d4edd;
-            font-size: 1.1rem;
+        .mode-btn:hover {
+            background: #e63e7b;
+            transform: translateY(-2px);
+        }
+        
+        .mode-btn.active {
+            background: #d63384;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+        
+        .container.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1 {
+            color: #d63384;
+            text-align: center;
             margin-bottom: 20px;
+            font-size: 2.2rem;
+        }
+        
+        h2 {
+            color: #ff4d8d;
+            margin: 25px 0 15px;
+            border-bottom: 2px solid #ffc3a0;
+            padding-bottom: 10px;
+        }
+        
+        /* Styles pour le Créateur */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #d63384;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ffc3a0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #ff4d8d;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn {
+            background: #ff4d8d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: #e63e7b;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .btn-secondary {
+            background: #9d4edd;
         }
         
         .step-indicator {
@@ -72,87 +163,18 @@
             background: #ff4d8d;
         }
         
-        .step.completed {
-            background: #d63384;
-        }
-        
-        .section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        .section.active {
-            display: block;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .form-group {
-            margin-bottom: 25px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #d63384;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ffc3a0;
+        .memory-card {
+            background: #fff0f6;
             border-radius: 10px;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: #ff4d8d;
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .btn {
-            background: #ff4d8d;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin: 10px 5px;
-        }
-        
-        .btn:hover {
-            background: #e63e7b;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-secondary {
-            background: #9d4edd;
-        }
-        
-        .btn-success {
-            background: #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #ff4d8d;
         }
         
         .photo-upload-area {
             border: 3px dashed #ffc3a0;
             border-radius: 15px;
-            padding: 40px 20px;
+            padding: 30px;
             text-align: center;
             cursor: pointer;
             margin: 20px 0;
@@ -164,43 +186,61 @@
             background: #fff0f6;
         }
         
-        .photo-upload-area i {
-            font-size: 3rem;
-            color: #ff4d8d;
-            margin-bottom: 15px;
+        .photo-preview {
+            display: inline-block;
+            margin: 10px;
+            position: relative;
         }
         
-        .preview-gallery {
+        .photo-preview img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #ffc3a0;
+        }
+        
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+        
+        /* Styles pour le Visualiseur */
+        .memory-display {
+            background: #fff0f6;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff4d8d;
+        }
+        
+        .memory-date {
+            color: #9d4edd;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .photo-gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
             margin: 20px 0;
         }
         
-        .photo-preview {
-            position: relative;
-            border-radius: 10px;
-            overflow: hidden;
-            height: 150px;
-        }
-        
-        .photo-preview img {
+        .photo-gallery img {
             width: 100%;
-            height: 100%;
+            height: 200px;
             object-fit: cover;
-        }
-        
-        .remove-photo {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
+            border-radius: 10px;
+            border: 3px solid #ffc3a0;
         }
         
         .qr-container {
@@ -229,39 +269,9 @@
         .share-buttons {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             flex-wrap: wrap;
             margin: 20px 0;
-        }
-        
-        .memory-card {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid #ff4d8d;
-        }
-        
-        .memory-date {
-            color: #9d4edd;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-        
-        .progress-bar {
-            height: 10px;
-            background: #ffc3a0;
-            border-radius: 5px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background: #ff4d8d;
-            border-radius: 5px;
-            transition: width 0.5s ease;
         }
         
         .instructions {
@@ -270,6 +280,16 @@
             border-radius: 10px;
             margin: 20px 0;
             border-left: 4px solid #9d4edd;
+        }
+        
+        .love-letter {
+            background: linear-gradient(135deg, #fff0f6, #fff);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 2px solid #ffc3a0;
+            font-style: italic;
+            line-height: 1.6;
         }
         
         footer {
@@ -286,7 +306,13 @@
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 1.8rem;
+            }
+            
+            .mode-btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
             }
             
             .share-buttons {
@@ -301,189 +327,233 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-heart"></i> Créateur de Souvenirs</h1>
-            <p class="subtitle">Créez une surprise romantique pour votre partenaire</p>
-            
-            <div class="step-indicator">
-                <div class="step active" id="step1">1</div>
-                <div class="step" id="step2">2</div>
-                <div class="step" id="step3">3</div>
-                <div class="step" id="step4">4</div>
-            </div>
-            
-            <div class="progress-bar">
-                <div class="progress" id="progressBar" style="width: 25%;"></div>
-            </div>
-        </header>
+    <div class="app-mode-selector">
+        <button class="mode-btn active" onclick="switchMode('creator')">
+            <i class="fas fa-plus-circle"></i> Je veux créer des souvenirs
+        </button>
+        <button class="mode-btn" onclick="switchMode('viewer')">
+            <i class="fas fa-eye"></i> Je veux voir les souvenirs de mon partenaire
+        </button>
+    </div>
+    
+    <!-- PARTIE 1 : CRÉATEUR -->
+    <div id="creator-container" class="container active">
+        <h1><i class="fas fa-heart"></i> Créez votre Surprise Romantique</h1>
+        <p style="text-align: center; color: #9d4edd; margin-bottom: 30px;">
+            Remplissez les informations ci-dessous pour créer un cadeau unique pour votre partenaire
+        </p>
         
-        <!-- Étape 1 : Informations -->
-        <section id="step1-section" class="section active">
-            <h2><i class="fas fa-user"></i> Informations Personnelles</h2>
-            <p class="instructions">Commencez par remplir ces informations pour personnaliser votre création.</p>
+        <div class="step-indicator">
+            <div class="step active" id="step1">1</div>
+            <div class="step" id="step2">2</div>
+            <div class="step" id="step3">3</div>
+            <div class="step" id="step4">4</div>
+        </div>
+        
+        <!-- Étape 1 : Informations de base -->
+        <section id="creator-step1" class="creator-step active">
+            <h2><i class="fas fa-user-circle"></i> Informations Personnelles</h2>
             
             <div class="form-group">
-                <label for="partnerName">Nom de votre partenaire :</label>
-                <input type="text" id="partnerName" placeholder="Ex: Marie, Jean, etc.">
+                <label for="creator-name">Votre nom :</label>
+                <input type="text" id="creator-name" placeholder="Comment votre partenaire vous appelle">
             </div>
             
             <div class="form-group">
-                <label for="yourName">Votre nom :</label>
-                <input type="text" id="yourName" placeholder="Comment votre partenaire vous appelle">
+                <label for="partner-name">Nom de votre partenaire :</label>
+                <input type="text" id="partner-name" placeholder="Le nom de la personne que vous aimez">
             </div>
             
             <div class="form-group">
-                <label for="anniversary">Date de votre rencontre / anniversaire :</label>
-                <input type="date" id="anniversary">
-            </div>
-            
-            <div class="form-group">
-                <label for="loveMessage">Message d'amour principal :</label>
-                <textarea id="loveMessage" placeholder="Écrivez un message d'amour touchant pour votre partenaire...">Ma chérie, chaque jour avec toi est un cadeau. En cette Saint-Valentin, je voulais te créer quelque chose de spécial pour te montrer à quel point tu comptes pour moi.</textarea>
+                <label for="relationship-date">Date de votre rencontre :</label>
+                <input type="date" id="relationship-date">
             </div>
             
             <div style="text-align: right;">
-                <button class="btn" onclick="nextStep(2)">
+                <button class="btn" onclick="nextCreatorStep(2)">
                     Suivant <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </section>
         
-        <!-- Étape 2 : Souvenirs -->
-        <section id="step2-section" class="section">
+        <!-- Étape 2 : Message d'amour -->
+        <section id="creator-step2" class="creator-step">
+            <h2><i class="fas fa-envelope"></i> Message d'Amour</h2>
+            
+            <div class="form-group">
+                <label for="love-message">Votre message d'amour :</label>
+                <textarea id="love-message" placeholder="Écrivez un message touchant pour votre partenaire...">Mon amour, chaque jour avec toi est un cadeau. En cette Saint-Valentin, je voulais te montrer à quel point tu comptes pour moi. Je t'aime plus que tout.</textarea>
+            </div>
+            
+            <div style="display: flex; justify-content: space-between;">
+                <button class="btn btn-secondary" onclick="nextCreatorStep(1)">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+                <button class="btn" onclick="nextCreatorStep(3)">
+                    Suivant <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- Étape 3 : Souvenirs -->
+        <section id="creator-step3" class="creator-step">
             <h2><i class="fas fa-memory"></i> Ajoutez vos Souvenirs</h2>
-            <p class="instructions">Ajoutez les moments spéciaux que vous avez partagés ensemble.</p>
             
             <div class="form-group">
-                <label for="memoryTitle">Titre du souvenir :</label>
-                <input type="text" id="memoryTitle" placeholder="Ex: Notre premier rendez-vous">
+                <label for="memory-title">Titre du souvenir :</label>
+                <input type="text" id="memory-title" placeholder="Ex: Notre premier rendez-vous">
             </div>
             
             <div class="form-group">
-                <label for="memoryDate">Date du souvenir :</label>
-                <input type="date" id="memoryDate">
+                <label for="memory-date">Date :</label>
+                <input type="date" id="memory-date">
             </div>
             
             <div class="form-group">
-                <label for="memoryDescription">Description :</label>
-                <textarea id="memoryDescription" placeholder="Décrivez ce moment spécial..."></textarea>
+                <label for="memory-description">Description :</label>
+                <textarea id="memory-description" placeholder="Décrivez ce moment spécial..."></textarea>
             </div>
             
             <div class="form-group">
-                <label for="memoryEmotion">Émotion principale :</label>
-                <select id="memoryEmotion">
+                <label for="memory-emotion">Émotion :</label>
+                <select id="memory-emotion">
                     <option value="❤️ Amour">❤️ Amour</option>
                     <option value="😂 Rire">😂 Rire</option>
                     <option value="😊 Bonheur">😊 Bonheur</option>
-                    <option value="🤗 Tendresse">🤗 Tendresse</option>
-                    <option value="🤩 Émerveillement">🤩 Émerveillement</option>
+                    <option value="😍 Passion">😍 Passion</option>
+                    <option value="🥰 Tendresse">🥰 Tendresse</option>
                 </select>
             </div>
             
-            <div style="display: flex; gap: 10px; margin: 20px 0;">
+            <div style="text-align: center; margin: 20px 0;">
                 <button class="btn" onclick="addMemory()">
                     <i class="fas fa-plus"></i> Ajouter ce souvenir
-                </button>
-                <button class="btn btn-secondary" onclick="nextStep(3)">
-                    Passer aux photos <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
             
             <h3>Souvenirs ajoutés :</h3>
-            <div id="memoriesList">
+            <div id="memories-list">
                 <!-- Les souvenirs seront ajoutés ici -->
             </div>
+            
+            <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+                <button class="btn btn-secondary" onclick="nextCreatorStep(2)">
+                    <i class="fas fa-arrow-left"></i> Retour
+                </button>
+                <button class="btn" onclick="nextCreatorStep(4)">
+                    Finaliser <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
         </section>
         
-        <!-- Étape 3 : Photos -->
-        <section id="step3-section" class="section">
-            <h2><i class="fas fa-images"></i> Ajoutez vos Photos</h2>
-            <p class="instructions">Téléchargez des photos de vos moments ensemble (max 6 photos).</p>
+        <!-- Étape 4 : Photos et QR Code -->
+        <section id="creator-step4" class="creator-step">
+            <h2><i class="fas fa-camera"></i> Photos et Partage</h2>
             
-            <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
-                <i class="fas fa-cloud-upload-alt"></i>
+            <div class="instructions">
+                <p><i class="fas fa-info-circle"></i> Vous pouvez ajouter des photos de vos moments ensemble (optionnel).</p>
+            </div>
+            
+            <div class="photo-upload-area" onclick="document.getElementById('photo-input').click()">
+                <i class="fas fa-cloud-upload-alt fa-3x" style="color: #ff4d8d;"></i>
                 <h3>Cliquez pour ajouter des photos</h3>
-                <p>ou glissez-déposez vos images ici</p>
-                <p style="font-size: 0.9rem; color: #666;">Formats acceptés: JPG, PNG, GIF (max 5MB)</p>
+                <p>Glissez-déposez ou cliquez pour sélectionner</p>
             </div>
             
-            <input type="file" id="photoInput" accept="image/*" multiple style="display: none;" onchange="handlePhotoUpload(event)">
+            <input type="file" id="photo-input" accept="image/*" multiple style="display: none;" onchange="handlePhotoUpload(event)">
             
-            <div class="preview-gallery" id="photoGallery">
-                <!-- Les prévisualisations de photos apparaîtront ici -->
+            <div id="photos-preview">
+                <!-- Les photos seront affichées ici -->
             </div>
             
-            <div style="text-align: right; margin-top: 30px;">
-                <button class="btn btn-secondary" onclick="prevStep(2)">
-                    <i class="fas fa-arrow-left"></i> Retour aux souvenirs
+            <div style="text-align: center; margin: 30px 0;">
+                <button class="btn btn-success" onclick="generateCreation()">
+                    <i class="fas fa-magic"></i> Générer ma création
                 </button>
-                <button class="btn" onclick="nextStep(4)">
-                    Générer le QR Code <i class="fas fa-arrow-right"></i>
+            </div>
+            
+            <div id="qr-section" style="display: none;">
+                <div class="qr-container">
+                    <h3><i class="fas fa-qrcode"></i> Votre création est prête !</h3>
+                    <p>Partagez ce QR Code avec votre partenaire :</p>
+                    
+                    <div class="qr-code" id="qr-code-container">
+                        <!-- QR Code généré ici -->
+                    </div>
+                    
+                    <div class="share-buttons">
+                        <button class="btn" onclick="downloadQRCode()">
+                            <i class="fas fa-download"></i> Télécharger QR Code
+                        </button>
+                        <button class="btn btn-success" onclick="shareViaWhatsApp()">
+                            <i class="fab fa-whatsapp"></i> Partager sur WhatsApp
+                        </button>
+                        <button class="btn btn-secondary" onclick="copyShareLink()">
+                            <i class="fas fa-link"></i> Copier le lien
+                        </button>
+                    </div>
+                    
+                    <div class="instructions">
+                        <h4><i class="fas fa-mobile-alt"></i> Comment partager :</h4>
+                        <ol style="text-align: left; margin-left: 20px;">
+                            <li>Téléchargez le QR Code</li>
+                            <li>Envoyez-le à votre partenaire par message</li>
+                            <li>Il/elle le scanne avec son téléphone</li>
+                            <li>Il/elle découvrira votre belle surprise !</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="btn btn-secondary" onclick="nextCreatorStep(3)">
+                    <i class="fas fa-arrow-left"></i> Modifier les souvenirs
                 </button>
             </div>
         </section>
-        
-        <!-- Étape 4 : QR Code -->
-        <section id="step4-section" class="section">
-            <h2><i class="fas fa-qrcode"></i> Votre QR Code Personnalisé</h2>
-            <p class="instructions">Partagez ce QR Code avec votre partenaire. En le scannant, il/elle pourra voir tous vos souvenirs et messages.</p>
-            
-            <div class="qr-container">
-                <h3>Votre création est prête !</h3>
-                <p>Scannez ce code avec un smartphone pour voir votre création</p>
-                
-                <div class="qr-code" id="qrCodeContainer">
-                    <!-- QR Code généré dynamiquement -->
+    </div>
+    
+    <!-- PARTIE 2 : VISUALISEUR -->
+    <div id="viewer-container" class="container">
+        <div id="viewer-content">
+            <!-- Le contenu sera chargé dynamiquement -->
+            <div style="text-align: center; padding: 50px 20px;">
+                <div style="font-size: 4rem; color: #ff4d8d; margin-bottom: 20px;">
+                    <i class="fas fa-heart"></i>
                 </div>
+                <h2>Prêt(e) à découvrir une surprise ?</h2>
+                <p style="margin: 20px 0;">Demandez à votre partenaire de vous envoyer le QR Code ou le lien</p>
                 
-                <div class="share-buttons">
-                    <button class="btn" onclick="downloadQRCode()">
-                        <i class="fas fa-download"></i> Télécharger QR Code
-                    </button>
-                    <button class="btn btn-success" onclick="shareViaWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> Partager sur WhatsApp
-                    </button>
-                    <button class="btn" style="background: #7289da;" onclick="copyLink()">
-                        <i class="fas fa-link"></i> Copier le lien
-                    </button>
-                </div>
-                
-                <div id="generatedUrl" style="margin: 20px 0; padding: 10px; background: white; border-radius: 10px; word-break: break-all; font-family: monospace;"></div>
-                
-                <div class="instructions">
-                    <h4><i class="fas fa-mobile-alt"></i> Comment partager :</h4>
-                    <ol style="text-align: left;">
-                        <li>Téléchargez le QR Code</li>
-                        <li>Envoyez-le à votre partenaire par message</li>
-                        <li>Votre partenaire le scanne avec son téléphone</li>
-                        <li>Il/elle verra tous vos souvenirs et messages !</li>
+                <div class="instructions" style="max-width: 500px; margin: 30px auto;">
+                    <h3><i class="fas fa-qrcode"></i> Comment accéder :</h3>
+                    <ol style="text-align: left; margin-left: 20px;">
+                        <li>Votre partenaire doit avoir créé une surprise pour vous</li>
+                        <li>Il/elle vous enverra un QR Code ou un lien</li>
+                        <li>Scannez le QR Code avec votre téléphone</li>
+                        <li>Ou ouvrez simplement le lien qu'il/elle vous envoie</li>
                     </ol>
                 </div>
+                
+                <div style="margin-top: 30px;">
+                    <button class="btn" onclick="loadFromUrl()">
+                        <i class="fas fa-link"></i> J'ai un lien direct
+                    </button>
+                </div>
             </div>
-            
-            <div style="text-align: center; margin-top: 30px;">
-                <button class="btn btn-secondary" onclick="prevStep(3)">
-                    <i class="fas fa-arrow-left"></i> Modifier les photos
-                </button>
-                <button class="btn" onclick="regenerateQR()">
-                    <i class="fas fa-sync-alt"></i> Régénérer QR Code
-                </button>
-            </div>
-        </section>
-        
-        <footer>
-            <p>Créé avec ❤️ pour la Saint-Valentin</p>
-            <p style="font-size: 0.9rem; margin-top: 10px;">Votre partenaire sera ému(e) par cette attention !</p>
-        </footer>
+        </div>
     </div>
+    
+    <footer>
+        <p>Créé avec ❤️ pour la Saint-Valentin</p>
+        <p style="font-size: 0.9rem; margin-top: 10px;">Vos données restent privées et sécurisées</p>
+    </footer>
 
     <script>
-        // Données de l'application
-        let appData = {
+        // ========== PARTIE CRÉATEUR ==========
+        let creatorData = {
+            creatorName: '',
             partnerName: '',
-            yourName: '',
-            anniversary: '',
+            relationshipDate: '',
             loveMessage: '',
             memories: [],
             photos: []
@@ -491,110 +561,41 @@
         
         let currentStep = 1;
         
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            updateStepIndicator();
-            
-            // Charger les données sauvegardées
-            const savedData = localStorage.getItem('valentineCreatorData');
-            if (savedData) {
-                appData = JSON.parse(savedData);
-                loadSavedData();
-            }
-        });
-        
         // Navigation entre étapes
-        function nextStep(step) {
+        function nextCreatorStep(step) {
             // Sauvegarder les données de l'étape actuelle
-            saveCurrentStepData();
+            saveCreatorStepData();
             
             // Masquer l'étape actuelle
-            document.getElementById(`step${currentStep}-section`).classList.remove('active');
-            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.querySelectorAll('.creator-step').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
             
             // Afficher la nouvelle étape
             currentStep = step;
-            document.getElementById(`step${currentStep}-section`).classList.add('active');
-            document.getElementById(`step${currentStep}`).classList.add('active');
-            
-            // Mettre à jour l'indicateur de progression
-            updateStepIndicator();
-            
-            // Si on arrive à l'étape 4, générer le QR Code
-            if (step === 4) {
-                generateQRCode();
+            document.getElementById(`creator-step${step}`).classList.add('active');
+            document.getElementById(`step${step}`).classList.add('active');
+        }
+        
+        function saveCreatorStepData() {
+            if (currentStep === 1) {
+                creatorData.creatorName = document.getElementById('creator-name').value;
+                creatorData.partnerName = document.getElementById('partner-name').value;
+                creatorData.relationshipDate = document.getElementById('relationship-date').value;
+            } else if (currentStep === 2) {
+                creatorData.loveMessage = document.getElementById('love-message').value;
             }
-        }
-        
-        function prevStep(step) {
-            nextStep(step);
-        }
-        
-        function updateStepIndicator() {
-            const steps = document.querySelectorAll('.step');
-            const progress = (currentStep / 4) * 100;
-            
-            document.getElementById('progressBar').style.width = `${progress}%`;
-            
-            steps.forEach((step, index) => {
-                const stepNum = index + 1;
-                if (stepNum < currentStep) {
-                    step.classList.add('completed');
-                    step.classList.remove('active');
-                } else if (stepNum === currentStep) {
-                    step.classList.add('active');
-                    step.classList.remove('completed');
-                } else {
-                    step.classList.remove('active', 'completed');
-                }
-            });
-        }
-        
-        // Sauvegarder les données de l'étape actuelle
-        function saveCurrentStepData() {
-            switch(currentStep) {
-                case 1:
-                    appData.partnerName = document.getElementById('partnerName').value;
-                    appData.yourName = document.getElementById('yourName').value;
-                    appData.anniversary = document.getElementById('anniversary').value;
-                    appData.loveMessage = document.getElementById('loveMessage').value;
-                    break;
-                case 2:
-                    // Les souvenirs sont ajoutés via addMemory()
-                    break;
-                case 3:
-                    // Les photos sont gérées via handlePhotoUpload()
-                    break;
-            }
-            
-            // Sauvegarder dans le localStorage
-            localStorage.setItem('valentineCreatorData', JSON.stringify(appData));
-        }
-        
-        // Charger les données sauvegardées
-        function loadSavedData() {
-            document.getElementById('partnerName').value = appData.partnerName || '';
-            document.getElementById('yourName').value = appData.yourName || '';
-            document.getElementById('anniversary').value = appData.anniversary || '';
-            document.getElementById('loveMessage').value = appData.loveMessage || '';
-            
-            // Charger les souvenirs
-            if (appData.memories && appData.memories.length > 0) {
-                appData.memories.forEach(memory => {
-                    addMemoryToUI(memory);
-                });
-            }
+            // Les souvenirs et photos sont sauvegardés séparément
         }
         
         // Gestion des souvenirs
         function addMemory() {
-            const title = document.getElementById('memoryTitle').value.trim();
-            const date = document.getElementById('memoryDate').value;
-            const description = document.getElementById('memoryDescription').value.trim();
-            const emotion = document.getElementById('memoryEmotion').value;
+            const title = document.getElementById('memory-title').value.trim();
+            const date = document.getElementById('memory-date').value;
+            const description = document.getElementById('memory-description').value.trim();
+            const emotion = document.getElementById('memory-emotion').value;
             
             if (!title || !description) {
-                alert('Veuillez remplir au moins le titre et la description du souvenir.');
+                alert('Veuillez remplir au moins le titre et la description');
                 return;
             }
             
@@ -606,23 +607,20 @@
                 emotion
             };
             
-            appData.memories.push(memory);
-            addMemoryToUI(memory);
+            creatorData.memories.push(memory);
+            displayMemory(memory);
             
             // Réinitialiser les champs
-            document.getElementById('memoryTitle').value = '';
-            document.getElementById('memoryDate').value = '';
-            document.getElementById('memoryDescription').value = '';
-            
-            localStorage.setItem('valentineCreatorData', JSON.stringify(appData));
+            document.getElementById('memory-title').value = '';
+            document.getElementById('memory-date').value = '';
+            document.getElementById('memory-description').value = '';
         }
         
-        function addMemoryToUI(memory) {
-            const memoriesList = document.getElementById('memoriesList');
-            
-            const memoryCard = document.createElement('div');
-            memoryCard.className = 'memory-card';
-            memoryCard.innerHTML = `
+        function displayMemory(memory) {
+            const list = document.getElementById('memories-list');
+            const card = document.createElement('div');
+            card.className = 'memory-card';
+            card.innerHTML = `
                 <div class="memory-date">
                     <strong>${memory.emotion}</strong> • ${new Date(memory.date).toLocaleDateString('fr-FR')}
                 </div>
@@ -632,171 +630,253 @@
                     <i class="fas fa-trash"></i> Supprimer
                 </button>
             `;
-            
-            memoriesList.appendChild(memoryCard);
+            list.appendChild(card);
         }
         
         function removeMemory(id) {
-            appData.memories = appData.memories.filter(memory => memory.id !== id);
-            localStorage.setItem('valentineCreatorData', JSON.stringify(appData));
-            
-            // Recharger l'interface
-            document.getElementById('memoriesList').innerHTML = '';
-            appData.memories.forEach(memory => addMemoryToUI(memory));
+            creatorData.memories = creatorData.memories.filter(m => m.id !== id);
+            document.getElementById('memories-list').innerHTML = '';
+            creatorData.memories.forEach(displayMemory);
         }
         
         // Gestion des photos
         function handlePhotoUpload(event) {
             const files = event.target.files;
-            const photoGallery = document.getElementById('photoGallery');
+            const preview = document.getElementById('photos-preview');
             
-            for (let i = 0; i < Math.min(files.length, 6 - appData.photos.length); i++) {
-                const file = files[i];
-                
-                if (file.size > 5 * 1024 * 1024) {
-                    alert(`La photo ${file.name} dépasse la taille maximale de 5MB`);
-                    continue;
+            for (let file of files) {
+                if (creatorData.photos.length >= 6) {
+                    alert('Maximum 6 photos autorisées');
+                    break;
                 }
                 
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    const photoData = {
-                        id: Date.now() + i,
-                        name: file.name,
-                        dataUrl: e.target.result
+                    const photo = {
+                        id: Date.now() + Math.random(),
+                        dataUrl: e.target.result,
+                        name: file.name
                     };
                     
-                    appData.photos.push(photoData);
-                    addPhotoToUI(photoData);
-                    
-                    if (i === Math.min(files.length, 6 - appData.photos.length) - 1) {
-                        localStorage.setItem('valentineCreatorData', JSON.stringify(appData));
-                    }
+                    creatorData.photos.push(photo);
+                    displayPhoto(photo);
                 };
                 reader.readAsDataURL(file);
             }
-            
-            // Réinitialiser l'input
-            event.target.value = '';
         }
         
-        function addPhotoToUI(photo) {
-            const photoGallery = document.getElementById('photoGallery');
-            
-            const photoContainer = document.createElement('div');
-            photoContainer.className = 'photo-preview';
-            photoContainer.innerHTML = `
+        function displayPhoto(photo) {
+            const preview = document.getElementById('photos-preview');
+            const div = document.createElement('div');
+            div.className = 'photo-preview';
+            div.innerHTML = `
                 <img src="${photo.dataUrl}" alt="${photo.name}">
-                <button class="remove-photo" onclick="removePhoto(${photo.id})">
+                <button class="remove-btn" onclick="removePhoto('${photo.id}')">
                     <i class="fas fa-times"></i>
                 </button>
             `;
-            
-            photoGallery.appendChild(photoContainer);
+            preview.appendChild(div);
         }
         
         function removePhoto(id) {
-            appData.photos = appData.photos.filter(photo => photo.id !== id);
-            localStorage.setItem('valentineCreatorData', JSON.stringify(appData));
-            
-            // Recharger l'interface
-            document.getElementById('photoGallery').innerHTML = '';
-            appData.photos.forEach(photo => addPhotoToUI(photo));
+            creatorData.photos = creatorData.photos.filter(p => p.id !== id);
+            document.getElementById('photos-preview').innerHTML = '';
+            creatorData.photos.forEach(displayPhoto);
         }
         
-        // Génération du QR Code
-        function generateQRCode() {
-            // Créer un identifiant unique pour cette création
-            const creationId = 'valentine-' + Date.now();
+        // Génération de la création
+        function generateCreation() {
+            // Sauvegarder toutes les données
+            saveCreatorStepData();
             
-            // Sauvegarder la création complète
+            // Créer un ID unique pour cette création
+            const creationId = 'valentine_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            // Préparer les données complètes
             const creationData = {
                 id: creationId,
                 timestamp: new Date().toISOString(),
-                data: appData
+                data: creatorData
             };
             
+            // Sauvegarder dans le localStorage
             localStorage.setItem(creationId, JSON.stringify(creationData));
             
-            // Générer une URL pour accéder à la création
-            const viewerUrl = `${window.location.origin}${window.location.pathname}?view=${creationId}`;
+            // Générer l'URL de partage
+            const shareUrl = `${window.location.origin}${window.location.pathname}?view=${creationId}`;
             
-            // Afficher l'URL
-            document.getElementById('generatedUrl').textContent = viewerUrl;
+            // Afficher le QR Code
+            displayQRCode(shareUrl);
             
-            // Générer le QR Code
-            const qrContainer = document.getElementById('qrCodeContainer');
+            // Sauvegarder l'URL pour partage
+            window.lastShareUrl = shareUrl;
+        }
+        
+        function displayQRCode(url) {
+            const qrContainer = document.getElementById('qr-code-container');
             qrContainer.innerHTML = '';
             
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(viewerUrl)}&color=ff4d8d&bgcolor=fff0f6&qzone=2`;
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(url)}&color=ff4d8d&bgcolor=fff0f6&qzone=2`;
             
             const img = document.createElement('img');
             img.src = qrUrl;
-            img.alt = 'QR Code pour votre création romantique';
+            img.alt = 'QR Code pour votre création';
             qrContainer.appendChild(img);
             
-            // Sauvegarder l'URL dans le localStorage pour y accéder plus tard
-            localStorage.setItem('lastCreationUrl', viewerUrl);
+            // Afficher la section QR Code
+            document.getElementById('qr-section').style.display = 'block';
+            
+            // Scroller vers le QR Code
+            document.getElementById('qr-section').scrollIntoView({ behavior: 'smooth' });
         }
         
-        function regenerateQR() {
-            generateQRCode();
-            alert('QR Code régénéré avec succès !');
-        }
-        
-        // Fonctions de partage
+        // Partage
         function downloadQRCode() {
-            const qrUrl = document.querySelector('#qrCodeContainer img').src;
+            const img = document.querySelector('#qr-code-container img');
             const link = document.createElement('a');
-            link.href = qrUrl;
-            link.download = 'mon-cadeau-saint-valentin.png';
+            link.href = img.src;
+            link.download = 'surprise-saint-valentin.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            
-            alert('QR Code téléchargé ! Envoyez-le à votre partenaire.');
         }
         
         function shareViaWhatsApp() {
-            const viewerUrl = document.getElementById('generatedUrl').textContent;
-            const message = `❤️ J'ai créé une surprise pour toi pour la Saint-Valentin !\n\nScanne ce QR Code ou ouvre ce lien :\n${viewerUrl}\n\nJe t'aime !`;
-            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
+            const message = `❤️ J'ai créé une surprise spéciale pour toi pour la Saint-Valentin !\n\nOuvre ce lien pour la découvrir :\n${window.lastShareUrl}\n\nJe t'aime !`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
         }
         
-        function copyLink() {
-            const viewerUrl = document.getElementById('generatedUrl').textContent;
-            navigator.clipboard.writeText(viewerUrl).then(() => {
-                alert('Lien copié dans le presse-papier ! Partagez-le avec votre partenaire.');
+        function copyShareLink() {
+            navigator.clipboard.writeText(window.lastShareUrl).then(() => {
+                alert('Lien copié ! Partagez-le avec votre partenaire.');
             });
         }
         
-        // Vérifier si on doit afficher une création
-        function checkForViewerMode() {
+        // ========== PARTIE VISUALISEUR ==========
+        function switchMode(mode) {
+            // Mettre à jour les boutons
+            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.mode-btn[onclick="switchMode('${mode}')"]`).classList.add('active');
+            
+            // Afficher le bon conteneur
+            document.getElementById('creator-container').classList.remove('active');
+            document.getElementById('viewer-container').classList.remove('active');
+            document.getElementById(`${mode}-container`).classList.add('active');
+            
+            // Si on passe en mode visualiseur, vérifier si on a un ID dans l'URL
+            if (mode === 'viewer') {
+                checkForViewerId();
+            }
+        }
+        
+        function checkForViewerId() {
             const urlParams = new URLSearchParams(window.location.search);
             const viewId = urlParams.get('view');
             
             if (viewId) {
-                // Afficher la création
-                const creationData = localStorage.getItem(viewId);
-                if (creationData) {
-                    displayCreation(JSON.parse(creationData));
+                loadCreation(viewId);
+            }
+        }
+        
+        function loadFromUrl() {
+            const url = prompt('Collez le lien que votre partenaire vous a envoyé :');
+            if (url) {
+                try {
+                    const urlObj = new URL(url);
+                    const viewId = urlObj.searchParams.get('view');
+                    if (viewId) {
+                        loadCreation(viewId);
+                    } else {
+                        alert('Lien invalide. Assurez-vous que c\'est le bon lien.');
+                    }
+                } catch {
+                    alert('URL invalide. Veuillez copier-coller exactement le lien.');
                 }
             }
         }
         
-        function displayCreation(creationData) {
-            // Cette fonction affiche la création pour le partenaire
-            // Pour l'instant, afficher simplement un message
-            alert(`Mode visualisation activé pour la création de ${creationData.data.yourName} !`);
+        function loadCreation(creationId) {
+            const creationData = localStorage.getItem(creationId);
             
-            // Vous pouvez développer cette fonction pour afficher
-            // une belle interface de visualisation
+            if (!creationData) {
+                alert('Création non trouvée. Vérifiez que le lien est correct.');
+                return;
+            }
+            
+            const creation = JSON.parse(creationData);
+            displayCreation(creation);
         }
         
-        // Vérifier au chargement
-        checkForViewerMode();
+        function displayCreation(creation) {
+            const data = creation.data;
+            const viewerContent = document.getElementById('viewer-content');
+            
+            viewerContent.innerHTML = `
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="font-size: 4rem; color: #ff4d8d;">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h1>Une surprise de ${data.creatorName}</h1>
+                    <p style="color: #9d4edd; font-size: 1.2rem;">
+                        Pour ${data.partnerName} ❤️
+                    </p>
+                </div>
+                
+                ${data.relationshipDate ? `
+                <div class="instructions" style="text-align: center;">
+                    <p><i class="fas fa-calendar-alt"></i> Depuis le ${new Date(data.relationshipDate).toLocaleDateString('fr-FR')}</p>
+                </div>
+                ` : ''}
+                
+                <div class="love-letter">
+                    <h3><i class="fas fa-envelope-open-text"></i> Message de ${data.creatorName}</h3>
+                    <p style="margin-top: 15px; font-size: 1.1rem;">${data.loveMessage}</p>
+                </div>
+                
+                ${data.memories.length > 0 ? `
+                <h2><i class="fas fa-memory"></i> Vos Souvenirs</h2>
+                ${data.memories.map(memory => `
+                    <div class="memory-display">
+                        <div class="memory-date">
+                            <strong>${memory.emotion}</strong> • ${new Date(memory.date).toLocaleDateString('fr-FR')}
+                        </div>
+                        <h3>${memory.title}</h3>
+                        <p>${memory.description}</p>
+                    </div>
+                `).join('')}
+                ` : ''}
+                
+                ${data.photos.length > 0 ? `
+                <h2><i class="fas fa-images"></i> Vos Photos</h2>
+                <div class="photo-gallery">
+                    ${data.photos.map(photo => `
+                        <img src="${photo.dataUrl}" alt="Photo souvenir">
+                    `).join('')}
+                </div>
+                ` : ''}
+                
+                <div style="text-align: center; margin: 40px 0; padding: 20px; background: #fff0f6; border-radius: 15px;">
+                    <div style="font-size: 3rem; color: #ff4d8d; margin-bottom: 15px;">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Avec tout mon amour</h3>
+                    <p style="font-size: 1.2rem; margin-top: 10px;">${data.creatorName}</p>
+                </div>
+            `;
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Vérifier si on doit afficher directement une création
+            const urlParams = new URLSearchParams(window.location.search);
+            const viewId = urlParams.get('view');
+            
+            if (viewId) {
+                // Passer automatiquement en mode visualiseur
+                switchMode('viewer');
+                loadCreation(viewId);
+            }
+        });
     </script>
 </body>
 </html>
-
