@@ -4,444 +4,241 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créateur de Souvenirs - Saint-Valentin</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome avec fallback -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+          onerror="this.onerror=null; this.href='data:text/css,';">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background: linear-gradient(135deg, #ffafbd, #ffc3a0); min-height: 100vh; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h1 { color: #d63384; text-align: center; margin-bottom: 20px; }
+        .btn { background: #ff4d8d; color: white; border: none; padding: 12px 25px; border-radius: 50px; cursor: pointer; margin: 10px; }
+        .btn:hover { background: #e63e7b; }
         
-        body {
-            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
-            color: #5a3d5c;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            color: #d63384;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .mode-selector {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 30px 0;
-        }
-        
-        .mode-btn {
-            background: #ff4d8d;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .mode-btn.active {
-            background: #d63384;
-            transform: scale(1.05);
-        }
-        
-        .mode-btn:hover {
-            background: #e63e7b;
-        }
-        
-        .section {
+        .error-message {
             display: none;
-        }
-        
-        .section.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        /* Créateur */
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #d63384;
-            font-weight: 600;
-        }
-        
-        input, textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ffc3a0;
-            border-radius: 10px;
-            font-size: 1rem;
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        .btn {
-            background: #ff4d8d;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1rem;
-            cursor: pointer;
-            margin: 5px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn:hover {
-            background: #e63e7b;
-        }
-        
-        .btn-success {
-            background: #28a745;
-        }
-        
-        .memory-card {
-            background: #fff0f6;
-            border-radius: 10px;
+            background: #ffebee;
+            color: #c62828;
             padding: 15px;
+            border-radius: 10px;
             margin: 15px 0;
-            border-left: 4px solid #ff4d8d;
+            border-left: 4px solid #c62828;
         }
         
-        /* QR Code */
-        .qr-section {
+        .loading {
             text-align: center;
             padding: 30px;
-            background: #fff0f6;
-            border-radius: 15px;
-            margin: 30px 0;
+            display: none;
         }
         
         .qr-code {
             width: 250px;
             height: 250px;
             margin: 20px auto;
-            padding: 15px;
-            background: white;
-            border-radius: 15px;
-            border: 3px solid #ffc3a0;
-        }
-        
-        .qr-code img {
-            width: 100%;
-            height: 100%;
-        }
-        
-        .url-display {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px auto;
-            word-break: break-all;
             border: 2px solid #ffc3a0;
-        }
-        
-        /* Visualiseur */
-        .viewer-content {
-            text-align: center;
-            padding: 50px 20px;
-        }
-        
-        .memory-display {
-            background: #fff0f6;
             border-radius: 15px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 5px solid #ff4d8d;
-            text-align: left;
+            padding: 10px;
+            background: white;
         }
         
-        .instructions {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid #9d4edd;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ffc3a0;
-            color: #9d4edd;
-        }
-        
-        .heart-animation {
-            animation: heartbeat 1.5s infinite;
-            color: #ff4d8d;
-        }
-        
-        @keyframes heartbeat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        @media (max-width: 768px) {
+            .container { padding: 15px; }
+            h1 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1><i class="fas fa-heart heart-animation"></i> Souvenirs d'Amour</h1>
-            <p style="color: #9d4edd;">Créez et partagez vos moments spéciaux</p>
-        </header>
+        <h1><i class="fas fa-heart"></i> Créateur de Souvenirs</h1>
         
-        <div class="mode-selector">
-            <button class="mode-btn active" onclick="switchMode('creator')">
-                <i class="fas fa-plus-circle"></i> Créer
-            </button>
-            <button class="mode-btn" onclick="switchMode('viewer')">
-                <i class="fas fa-eye"></i> Voir
-            </button>
+        <!-- Message d'erreur -->
+        <div id="errorMessage" class="error-message"></div>
+        
+        <!-- Message de chargement -->
+        <div id="loading" class="loading">
+            <i class="fas fa-spinner fa-spin fa-2x"></i>
+            <p>Génération en cours...</p>
         </div>
         
-        <!-- CRÉATEUR -->
-        <section id="creator" class="section active">
-            <h2><i class="fas fa-heart"></i> Créez votre surprise</h2>
-            
-            <div class="form-group">
-                <label>Votre nom :</label>
-                <input type="text" id="yourName" placeholder="Votre nom" value="Jean">
+        <!-- Formulaire -->
+        <div id="formSection">
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; color: #d63384;">Votre nom :</label>
+                <input type="text" id="yourName" placeholder="Votre nom" style="width: 100%; padding: 12px; border: 2px solid #ffc3a0; border-radius: 10px;">
             </div>
             
-            <div class="form-group">
-                <label>Nom de votre partenaire :</label>
-                <input type="text" id="partnerName" placeholder="Nom de votre bien-aimé(e)" value="Marie">
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; color: #d63384;">Nom de votre partenaire :</label>
+                <input type="text" id="partnerName" placeholder="Nom de votre partenaire" style="width: 100%; padding: 12px; border: 2px solid #ffc3a0; border-radius: 10px;">
             </div>
             
-            <div class="form-group">
-                <label>Votre message d'amour :</label>
-                <textarea id="loveMessage" placeholder="Écrivez un message d'amour...">Ma chérie, chaque moment avec toi est précieux. Je t'aime plus que tout.</textarea>
-            </div>
-            
-            <div class="form-group">
-                <label>Ajouter un souvenir :</label>
-                <input type="text" id="memoryInput" placeholder="Décrivez un moment spécial...">
-                <button class="btn" onclick="addMemory()" style="margin-top: 10px; width: 100%;">
-                    <i class="fas fa-plus"></i> Ajouter ce souvenir
-                </button>
-            </div>
-            
-            <div id="memoriesList">
-                <!-- Souvenirs ajoutés ici -->
-                <div class="memory-card">
-                    <strong>Notre première rencontre</strong>
-                    <p>Ce jour où nos regards se sont croisés pour la première fois...</p>
-                    <small>Ajouté maintenant</small>
-                </div>
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; color: #d63384;">Votre message :</label>
+                <textarea id="loveMessage" placeholder="Écrivez un message d'amour..." style="width: 100%; padding: 12px; border: 2px solid #ffc3a0; border-radius: 10px; height: 120px;">Je t'aime plus que tout au monde ❤️</textarea>
             </div>
             
             <div style="text-align: center; margin: 30px 0;">
-                <button class="btn btn-success" onclick="generateQRCode()" style="font-size: 1.2rem; padding: 15px 40px;">
-                    <i class="fas fa-qrcode"></i> Générer le QR Code
+                <button class="btn" onclick="createSurprise()" style="font-size: 1.2rem; padding: 15px 40px;">
+                    <i class="fas fa-magic"></i> Créer ma surprise
+                </button>
+            </div>
+        </div>
+        
+        <!-- Résultat QR Code -->
+        <div id="resultSection" style="display: none; text-align: center;">
+            <h2><i class="fas fa-gift"></i> Votre surprise est prête !</h2>
+            
+            <div class="qr-code" id="qrCodeContainer">
+                <!-- QR Code apparaîtra ici -->
+            </div>
+            
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 20px 0;">
+                <p><strong>Lien à partager :</strong></p>
+                <code id="shareLink" style="background: white; padding: 10px; border-radius: 5px; display: block; margin: 10px 0; word-break: break-all;"></code>
+                <button class="btn" onclick="copyLink()">
+                    <i class="fas fa-copy"></i> Copier le lien
                 </button>
             </div>
             
-            <!-- SECTION QR CODE (cachée au début) -->
-            <div id="qrSection" style="display: none;">
-                <div class="qr-section">
-                    <h3><i class="fas fa-gift"></i> Votre surprise est prête !</h3>
-                    
-                    <div class="qr-code" id="qrCodeDisplay">
-                        <!-- QR Code généré ici -->
-                        <img id="qrImage" src="" alt="QR Code">
-                    </div>
-                    
-                    <div class="url-display">
-                        <p><strong>Lien à partager :</strong></p>
-                        <code id="shareUrl">Le lien apparaîtra ici...</code>
-                        <button class="btn" onclick="copyUrl()" style="width: 100%; margin-top: 10px;">
-                            <i class="fas fa-copy"></i> Copier le lien
-                        </button>
-                    </div>
-                    
-                    <div class="instructions">
-                        <h4><i class="fas fa-share-alt"></i> Comment partager :</h4>
-                        <p>1. Copiez le lien ci-dessus<br>
-                        2. Envoyez-le à votre partenaire<br>
-                        3. Il/elle pourra voir tous vos souvenirs !</p>
-                    </div>
-                </div>
+            <div style="margin-top: 30px;">
+                <button class="btn" onclick="resetForm()">
+                    <i class="fas fa-redo"></i> Créer une nouvelle surprise
+                </button>
             </div>
-        </section>
-        
-        <!-- VISUALISEUR -->
-        <section id="viewer" class="section">
-            <div class="viewer-content">
-                <div style="font-size: 4rem; color: #ff4d8d; margin-bottom: 20px;">
-                    <i class="fas fa-heart"></i>
-                </div>
-                
-                <h2>Découvrez une surprise d'amour</h2>
-                
-                <div class="instructions">
-                    <h3><i class="fas fa-qrcode"></i> Pour voir les souvenirs :</h3>
-                    <p>Collez le lien que votre partenaire vous a envoyé :</p>
-                    
-                    <input type="text" id="viewerUrlInput" placeholder="https://..." style="width: 100%; padding: 12px; border: 2px solid #ffc3a0; border-radius: 10px; margin: 15px 0;">
-                    
-                    <button class="btn" onclick="loadSurprise()" style="width: 100%;">
-                        <i class="fas fa-eye"></i> Voir la surprise
-                    </button>
-                </div>
-                
-                <!-- CONTENU DES SOUVENIRS -->
-                <div id="surpriseContent" style="display: none;">
-                    <!-- Les souvenirs apparaîtront ici -->
-                </div>
-            </div>
-        </section>
-        
-        <footer>
-            <p>Créé avec <i class="fas fa-heart" style="color: #ff4d8d;"></i> pour la Saint-Valentin</p>
-        </footer>
+        </div>
     </div>
 
     <script>
-        // ========== VARIABLES ==========
-        let creationData = {
-            yourName: '',
-            partnerName: '',
-            loveMessage: '',
-            memories: [],
-            creationDate: ''
-        };
-        
-        // ========== FONCTIONS DU CRÉATEUR ==========
-        
-        function switchMode(mode) {
-            // Changer les boutons actifs
-            document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Changer les sections visibles
-            document.getElementById('creator').classList.remove('active');
-            document.getElementById('viewer').classList.remove('active');
-            document.getElementById(mode).classList.add('active');
-            
-            // Vérifier si on a un lien dans l'URL (mode visualiseur)
-            if (mode === 'viewer') {
-                checkUrlForSurprise();
+        // Vérifier que le localStorage est disponible
+        function isStorageAvailable() {
+            try {
+                const testKey = '__test__';
+                localStorage.setItem(testKey, testKey);
+                localStorage.removeItem(testKey);
+                return true;
+            } catch (e) {
+                showError('Le stockage local n\'est pas disponible. Votre navigateur peut être en mode privé.');
+                return false;
             }
         }
         
-        function addMemory() {
-            const input = document.getElementById('memoryInput');
-            const text = input.value.trim();
+        // Afficher une erreur
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = '⚠️ ' + message;
+            errorDiv.style.display = 'block';
+            console.error(message);
             
-            if (!text) {
-                alert('Veuillez écrire un souvenir');
-                return;
+            // Utiliser Copilot Edge si disponible
+            if (window.copilot) {
+                window.copilot.explainError?.(message);
             }
-            
-            // Ajouter aux données
-            creationData.memories.push(text);
-            
-            // Afficher dans la liste
-            const list = document.getElementById('memoriesList');
-            const card = document.createElement('div');
-            card.className = 'memory-card';
-            card.innerHTML = `
-                <strong>Souvenir #${creationData.memories.length}</strong>
-                <p>${text}</p>
-                <small>Ajouté maintenant</small>
-            `;
-            list.appendChild(card);
-            
-            // Vider le champ
-            input.value = '';
         }
         
-        // FONCTION CRITIQUE : Génération du QR Code
-        function generateQRCode() {
-            // 1. Récupérer les données
-            creationData.yourName = document.getElementById('yourName').value;
-            creationData.partnerName = document.getElementById('partnerName').value;
-            creationData.loveMessage = document.getElementById('loveMessage').value;
-            creationData.creationDate = new Date().toISOString();
-            
-            // 2. Vérifier qu'on a au moins des données
-            if (!creationData.yourName || !creationData.partnerName) {
-                alert('Veuillez remplir au moins les noms');
-                return;
+        // Masquer l'erreur
+        function hideError() {
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+        
+        // Afficher le chargement
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+        }
+        
+        // Masquer le chargement
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+        
+        // Créer la surprise
+        async function createSurprise() {
+            try {
+                hideError();
+                showLoading();
+                
+                // Récupérer les valeurs
+                const yourName = document.getElementById('yourName').value.trim();
+                const partnerName = document.getElementById('partnerName').value.trim();
+                const loveMessage = document.getElementById('loveMessage').value.trim();
+                
+                // Validation
+                if (!yourName || !partnerName) {
+                    throw new Error('Veuillez remplir les noms');
+                }
+                
+                if (!isStorageAvailable()) {
+                    throw new Error('Impossible de sauvegarder les données');
+                }
+                
+                // Créer les données
+                const surpriseData = {
+                    yourName,
+                    partnerName,
+                    loveMessage: loveMessage || 'Je t\'aime ❤️',
+                    date: new Date().toISOString(),
+                    id: 'surprise_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+                };
+                
+                // Sauvegarder
+                localStorage.setItem(surpriseData.id, JSON.stringify(surpriseData));
+                
+                // Générer l'URL
+                const baseUrl = window.location.origin + window.location.pathname;
+                const shareUrl = `${baseUrl}?id=${surpriseData.id}`;
+                
+                // Afficher le résultat
+                displayResult(shareUrl, surpriseData);
+                
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                hideLoading();
             }
-            
-            // 3. Créer un ID unique
-            const uniqueId = 'love_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-            
-            // 4. Sauvegarder les données
-            localStorage.setItem(uniqueId, JSON.stringify(creationData));
-            
-            // 5. Créer l'URL de partage
-            const baseUrl = window.location.origin + window.location.pathname;
-            const shareUrl = `${baseUrl}?surprise=${uniqueId}`;
-            
-            // 6. Afficher l'URL
-            document.getElementById('shareUrl').textContent = shareUrl;
-            
-            // 7. Générer le QR Code avec une API simple
-            generateQRImage(shareUrl);
-            
-            // 8. Afficher la section QR Code
-            document.getElementById('qrSection').style.display = 'block';
-            
-            // 9. Scroller vers le QR Code
-            document.getElementById('qrSection').scrollIntoView({ behavior: 'smooth' });
-            
-            alert('🎉 QR Code généré avec succès ! Copiez le lien pour partager.');
         }
         
-        // Fonction pour générer l'image du QR Code
-        function generateQRImage(url) {
-            // Utiliser une API de QR Code GRATUITE et FIABLE
-            const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(url)}&color=ff4d8d&bgcolor=fff0f6`;
+        // Afficher le résultat
+        function displayResult(shareUrl, data) {
+            // Cacher le formulaire
+            document.getElementById('formSection').style.display = 'none';
             
-            // Afficher l'image
-            document.getElementById('qrImage').src = qrImageUrl;
-            document.getElementById('qrImage').alt = 'QR Code pour vos souvenirs d\'amour';
+            // Afficher le lien
+            document.getElementById('shareLink').textContent = shareUrl;
+            
+            // Générer le QR Code SIMPLE (sans bibliothèque externe)
+            generateSimpleQRCode(shareUrl);
+            
+            // Afficher la section résultat
+            document.getElementById('resultSection').style.display = 'block';
+            
+            // Scroller vers le résultat
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+            
+            console.log('Surprise créée:', data);
         }
         
-        function copyUrl() {
-            const url = document.getElementById('shareUrl').textContent;
-            navigator.clipboard.writeText(url).then(() => {
+        // Générer un QR Code simple (fallback si bibliothèque échoue)
+        function generateSimpleQRCode(url) {
+            const qrContainer = document.getElementById('qrCodeContainer');
+            
+            // Méthode 1 : API externe (la plus fiable)
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(url)}&color=ff4d8d&bgcolor=fff0f6`;
+            
+            qrContainer.innerHTML = `<img src="${qrUrl}" alt="QR Code" style="width: 100%; height: 100%; border-radius: 10px;">`;
+            
+            console.log('QR Code généré via API');
+        }
+        
+        // Copier le lien
+        function copyLink() {
+            const link = document.getElementById('shareLink').textContent;
+            
+            navigator.clipboard.writeText(link).then(() => {
                 alert('✅ Lien copié ! Envoyez-le à votre partenaire.');
             }).catch(err => {
                 // Fallback pour anciens navigateurs
                 const textArea = document.createElement('textarea');
-                textArea.value = url;
+                textArea.value = link;
                 document.body.appendChild(textArea);
                 textArea.select();
                 document.execCommand('copy');
@@ -450,158 +247,71 @@
             });
         }
         
-        // ========== FONCTIONS DU VISUALISEUR ==========
+        // Réinitialiser le formulaire
+        function resetForm() {
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('formSection').style.display = 'block';
+            document.getElementById('yourName').value = '';
+            document.getElementById('partnerName').value = '';
+            document.getElementById('loveMessage').value = 'Je t\'aime plus que tout au monde ❤️';
+            hideError();
+        }
         
-        function checkUrlForSurprise() {
+        // Vérifier si on doit afficher une surprise existante
+        function checkForExistingSurprise() {
             const urlParams = new URLSearchParams(window.location.search);
-            const surpriseId = urlParams.get('surprise');
+            const surpriseId = urlParams.get('id');
             
-            if (surpriseId) {
-                loadSurpriseById(surpriseId);
-            }
-        }
-        
-        function loadSurprise() {
-            const urlInput = document.getElementById('viewerUrlInput').value.trim();
-            
-            if (!urlInput) {
-                alert('Veuillez coller un lien');
-                return;
-            }
-            
-            try {
-                // Extraire l'ID depuis l'URL
-                const url = new URL(urlInput);
-                const surpriseId = url.searchParams.get('surprise');
+            if (surpriseId && isStorageAvailable()) {
+                const savedData = localStorage.getItem(surpriseId);
                 
-                if (surpriseId) {
-                    loadSurpriseById(surpriseId);
-                } else {
-                    alert('Lien invalide. Vérifiez que c\'est bien le bon lien.');
-                }
-            } catch (error) {
-                // Si ce n'est pas une URL complète, essayer de traiter comme un ID direct
-                if (urlInput.startsWith('love_')) {
-                    loadSurpriseById(urlInput);
-                } else {
-                    alert('URL invalide. Veuillez copier-coller le lien complet.');
+                if (savedData) {
+                    try {
+                        const data = JSON.parse(savedData);
+                        displaySurpriseView(data);
+                    } catch (error) {
+                        showError('Erreur de chargement de la surprise');
+                    }
                 }
             }
         }
         
-        function loadSurpriseById(surpriseId) {
-            // Charger les données depuis le localStorage
-            const savedData = localStorage.getItem(surpriseId);
-            
-            if (!savedData) {
-                alert('❌ Souvenirs non trouvés. Le lien est peut-être expiré.');
-                return;
-            }
-            
-            try {
-                const data = JSON.parse(savedData);
-                displaySurprise(data);
-            } catch (error) {
-                alert('Erreur de chargement des souvenirs.');
-            }
-        }
-        
-        function displaySurprise(data) {
-            const contentDiv = document.getElementById('surpriseContent');
-            
-            // Construire le contenu HTML
-            let html = `
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <div style="font-size: 3rem; color: #ff4d8d;">
+        // Afficher la vue surprise (pour le partenaire qui reçoit)
+        function displaySurpriseView(data) {
+            document.body.innerHTML = `
+                <div class="container" style="text-align: center;">
+                    <div style="font-size: 4rem; color: #ff4d8d; margin-bottom: 20px;">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h2>Une surprise de ${data.yourName}</h2>
-                    <p style="color: #9d4edd; font-size: 1.2rem;">
-                        Pour ${data.partnerName} ❤️
-                    </p>
-                    <p style="color: #666; margin-top: 10px;">
-                        <i class="fas fa-calendar-alt"></i> Créé le ${new Date(data.creationDate).toLocaleDateString('fr-FR')}
-                    </p>
-                </div>
-                
-                <div class="memory-display" style="text-align: center;">
-                    <h3><i class="fas fa-envelope"></i> Message d'amour</h3>
-                    <p style="font-size: 1.1rem; margin-top: 15px;">${data.loveMessage}</p>
-                </div>
-            `;
-            
-            // Ajouter les souvenirs
-            if (data.memories && data.memories.length > 0) {
-                html += '<h3 style="margin: 30px 0 15px;"><i class="fas fa-memory"></i> Souvenirs partagés</h3>';
-                
-                data.memories.forEach((memory, index) => {
-                    html += `
-                        <div class="memory-display">
-                            <h4>Souvenir #${index + 1}</h4>
-                            <p>${memory}</p>
-                        </div>
-                    `;
-                });
-            } else {
-                html += '<div class="instructions"><p>Aucun souvenir ajouté.</p></div>';
-            }
-            
-            html += `
-                <div style="text-align: center; margin: 40px 0; padding: 20px; background: #fff0f6; border-radius: 15px;">
-                    <div style="font-size: 2.5rem; color: #ff4d8d; margin-bottom: 15px;">
-                        <i class="fas fa-heartbeat"></i>
+                    <h1>Une surprise de ${data.yourName}</h1>
+                    <p style="color: #9d4edd; font-size: 1.2rem;">Pour ${data.partnerName} ❤️</p>
+                    
+                    <div style="background: #fff0f6; padding: 25px; border-radius: 15px; margin: 30px 0;">
+                        <h3><i class="fas fa-envelope"></i> Message d'amour</h3>
+                        <p style="font-size: 1.1rem; margin-top: 15px;">${data.loveMessage}</p>
                     </div>
-                    <h3>Avec tout mon amour</h3>
-                    <p style="font-size: 1.2rem; margin-top: 10px;">${data.yourName}</p>
-                </div>
-                
-                <div style="text-align: center;">
-                    <button class="btn" onclick="switchMode('creator')">
-                        <i class="fas fa-plus-circle"></i> Créer ma propre surprise
-                    </button>
+                    
+                    <p style="color: #666; margin-top: 20px;">
+                        <i class="fas fa-calendar-alt"></i> Créé le ${new Date(data.date).toLocaleDateString('fr-FR')}
+                    </p>
+                    
+                    <div style="margin-top: 40px;">
+                        <button class="btn" onclick="location.href='${window.location.pathname}'">
+                            <i class="fas fa-plus-circle"></i> Créer ma propre surprise
+                        </button>
+                    </div>
                 </div>
             `;
-            
-            // Afficher le contenu
-            contentDiv.innerHTML = html;
-            contentDiv.style.display = 'block';
-            
-            // Scroller vers le contenu
-            contentDiv.scrollIntoView({ behavior: 'smooth' });
         }
         
-        // ========== INITIALISATION ==========
+        // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
-            // Vérifier si on a un lien de surprise dans l'URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const surpriseId = urlParams.get('surprise');
+            console.log('Application chargée');
+            checkForExistingSurprise();
             
-            if (surpriseId) {
-                // Passer automatiquement en mode visualiseur
-                switchMode('viewer');
-                loadSurpriseById(surpriseId);
-            }
-            
-            // Ajouter quelques souvenirs par défaut pour tester
-            if (creationData.memories.length === 0) {
-                creationData.memories = [
-                    "Notre première rencontre - un moment magique",
-                    "Ce voyage en montagne où nous avons vu le coucher de soleil",
-                    "Les fous rires autour d'un bon repas"
-                ];
-                
-                // Afficher les souvenirs par défaut
-                creationData.memories.forEach(memory => {
-                    const list = document.getElementById('memoriesList');
-                    const card = document.createElement('div');
-                    card.className = 'memory-card';
-                    card.innerHTML = `
-                        <strong>${memory.split(' - ')[0]}</strong>
-                        <p>${memory}</p>
-                        <small>Souvenir par défaut</small>
-                    `;
-                    list.appendChild(card);
-                });
+            // Tester le localStorage
+            if (!isStorageAvailable()) {
+                showError('Mode navigation privée détecté. Activez le stockage local pour sauvegarder vos créations.');
             }
         });
     </script>
