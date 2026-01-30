@@ -3,148 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Application romantique interactive pour la Saint-Valentin">
-    <title>Mon Cœur Pour Toi - Saint-Valentin</title>
+    <meta name="description" content="Créateur de souvenirs romantiques pour la Saint-Valentin">
+    <title>Créateur de Souvenirs - Saint-Valentin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>❤️</text></svg>">
-    
-    <!-- Open Graph pour le partage -->
-    <meta property="og:title" content="App Saint-Valentin - Pour Mon Amour">
-    <meta property="og:description" content="Une application romantique créée avec amour">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80">
-    <meta property="og:url" content="https://votrepseudo.github.io/saint-valentin-app/">
     
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
             background: linear-gradient(135deg, #ffafbd, #ffc3a0);
             color: #5a3d5c;
             min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .github-banner {
-            background: #24292e;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            font-size: 0.9rem;
-        }
-        
-        .github-banner a {
-            color: #ffccd5;
-            text-decoration: none;
+            padding: 20px;
         }
         
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
         
         header {
             text-align: center;
-            padding: 40px 20px;
-            position: relative;
-        }
-        
-        .hearts-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .heart {
-            position: absolute;
-            color: rgba(255, 105, 180, 0.3);
-            font-size: 24px;
-            animation: float 8s infinite linear;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
+            margin-bottom: 30px;
         }
         
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
             color: #d63384;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
         
         .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
             color: #9d4edd;
-            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
         }
         
-        .url-display {
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 20px auto;
-            max-width: 600px;
-            word-break: break-all;
-            border: 2px solid #ffc3a0;
-        }
-        
-        .url-display code {
-            background: #f8f9fa;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-family: monospace;
-            color: #d63384;
-        }
-        
-        .nav-buttons {
+        .step-indicator {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
             margin: 30px 0;
         }
         
-        .nav-btn {
-            background: #ff4d8d;
+        .step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ffc3a0;
             color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
         
-        .nav-btn:hover {
-            background: #e63e7b;
-            transform: translateY(-3px);
+        .step.active {
+            background: #ff4d8d;
+        }
+        
+        .step.completed {
+            background: #d63384;
         }
         
         .section {
             display: none;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            padding: 30px;
-            margin: 30px 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
         }
         
         .section.active {
             display: block;
-            animation: fadeIn 0.8s ease-out;
         }
         
         @keyframes fadeIn {
@@ -152,273 +90,712 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .message-box {
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #d63384;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ffc3a0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #ff4d8d;
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            background: #ff4d8d;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            background: #e63e7b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background: #9d4edd;
+        }
+        
+        .btn-success {
+            background: #28a745;
+        }
+        
+        .photo-upload-area {
+            border: 3px dashed #ffc3a0;
+            border-radius: 15px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s;
+        }
+        
+        .photo-upload-area:hover {
+            border-color: #ff4d8d;
             background: #fff0f6;
-            border-left: 5px solid #ff4d8d;
-            padding: 20px;
-            margin: 20px 0;
-            border-radius: 10px;
         }
         
-        .github-instructions {
-            background: #f6f8fa;
-            border: 1px solid #e1e4e8;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        
-        .github-instructions h3 {
-            color: #24292e;
+        .photo-upload-area i {
+            font-size: 3rem;
+            color: #ff4d8d;
             margin-bottom: 15px;
         }
         
-        .github-instructions ol {
-            margin-left: 20px;
+        .preview-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
         }
         
-        .github-instructions li {
-            margin-bottom: 10px;
-            padding-left: 10px;
+        .photo-preview {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 150px;
         }
         
-        .github-instructions code {
-            background: #24292e;
-            color: #f6f8fa;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: monospace;
+        .photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .remove-photo {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+        
+        .qr-container {
+            text-align: center;
+            padding: 30px;
+            background: #fff0f6;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .qr-code {
+            width: 250px;
+            height: 250px;
+            margin: 20px auto;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            border: 3px solid #ffc3a0;
+        }
+        
+        .qr-code img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .memory-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid #ff4d8d;
+        }
+        
+        .memory-date {
+            color: #9d4edd;
             font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #ffc3a0;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: #ff4d8d;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .instructions {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #9d4edd;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ffc3a0;
+            color: #9d4edd;
         }
         
         @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
             h1 {
                 font-size: 2rem;
             }
             
-            .nav-buttons {
+            .share-buttons {
                 flex-direction: column;
-                align-items: center;
             }
             
-            .nav-btn {
-                width: 90%;
+            .btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <div class="github-banner">
-        Hébergé gratuitement sur GitHub Pages • 
-        <a href="https://github.com/" target="_blank">Créer votre propre app</a>
-    </div>
-    
-    <div class="hearts-bg" id="heartsBg"></div>
-    
     <div class="container">
         <header>
-            <h1><i class="fas fa-heart"></i> Mon Cœur Pour Toi <i class="fas fa-heart"></i></h1>
-            <p class="subtitle">Une application spéciale pour célébrer notre amour</p>
+            <h1><i class="fas fa-heart"></i> Créateur de Souvenirs</h1>
+            <p class="subtitle">Créez une surprise romantique pour votre partenaire</p>
             
-            <div class="url-display">
-                <p><strong>URL de votre application :</strong></p>
-                <code id="appUrl">Chargement...</code>
-                <button onclick="copyUrl()" style="margin-top: 10px; background: #d63384; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">
-                    <i class="fas fa-copy"></i> Copier l'URL
-                </button>
+            <div class="step-indicator">
+                <div class="step active" id="step1">1</div>
+                <div class="step" id="step2">2</div>
+                <div class="step" id="step3">3</div>
+                <div class="step" id="step4">4</div>
             </div>
             
-            <div class="nav-buttons">
-                <button class="nav-btn active" data-section="home">Accueil</button>
-                <button class="nav-btn" data-section="message">Message d'Amour</button>
-                <button class="nav-btn" data-section="memories">Nos Souvenirs</button>
-                <button class="nav-btn" data-section="qr">QR Code</button>
-                <button class="nav-btn" data-section="github">Info GitHub</button>
+            <div class="progress-bar">
+                <div class="progress" id="progressBar" style="width: 25%;"></div>
             </div>
         </header>
         
-        <main>
-            <!-- Section Accueil -->
-            <section id="home" class="section active">
-                <h2>Bienvenue dans notre application d'amour</h2>
-                <div class="message-box">
-                    <p>Chaque jour avec toi est une bénédiction. Cette application a été créée spécialement pour toi pour cette Saint-Valentin.</p>
+        <!-- Étape 1 : Informations -->
+        <section id="step1-section" class="section active">
+            <h2><i class="fas fa-user"></i> Informations Personnelles</h2>
+            <p class="instructions">Commencez par remplir ces informations pour personnaliser votre création.</p>
+            
+            <div class="form-group">
+                <label for="partnerName">Nom de votre partenaire :</label>
+                <input type="text" id="partnerName" placeholder="Ex: Marie, Jean, etc.">
+            </div>
+            
+            <div class="form-group">
+                <label for="yourName">Votre nom :</label>
+                <input type="text" id="yourName" placeholder="Comment votre partenaire vous appelle">
+            </div>
+            
+            <div class="form-group">
+                <label for="anniversary">Date de votre rencontre / anniversaire :</label>
+                <input type="date" id="anniversary">
+            </div>
+            
+            <div class="form-group">
+                <label for="loveMessage">Message d'amour principal :</label>
+                <textarea id="loveMessage" placeholder="Écrivez un message d'amour touchant pour votre partenaire...">Ma chérie, chaque jour avec toi est un cadeau. En cette Saint-Valentin, je voulais te créer quelque chose de spécial pour te montrer à quel point tu comptes pour moi.</textarea>
+            </div>
+            
+            <div style="text-align: right;">
+                <button class="btn" onclick="nextStep(2)">
+                    Suivant <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- Étape 2 : Souvenirs -->
+        <section id="step2-section" class="section">
+            <h2><i class="fas fa-memory"></i> Ajoutez vos Souvenirs</h2>
+            <p class="instructions">Ajoutez les moments spéciaux que vous avez partagés ensemble.</p>
+            
+            <div class="form-group">
+                <label for="memoryTitle">Titre du souvenir :</label>
+                <input type="text" id="memoryTitle" placeholder="Ex: Notre premier rendez-vous">
+            </div>
+            
+            <div class="form-group">
+                <label for="memoryDate">Date du souvenir :</label>
+                <input type="date" id="memoryDate">
+            </div>
+            
+            <div class="form-group">
+                <label for="memoryDescription">Description :</label>
+                <textarea id="memoryDescription" placeholder="Décrivez ce moment spécial..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="memoryEmotion">Émotion principale :</label>
+                <select id="memoryEmotion">
+                    <option value="❤️ Amour">❤️ Amour</option>
+                    <option value="😂 Rire">😂 Rire</option>
+                    <option value="😊 Bonheur">😊 Bonheur</option>
+                    <option value="🤗 Tendresse">🤗 Tendresse</option>
+                    <option value="🤩 Émerveillement">🤩 Émerveillement</option>
+                </select>
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin: 20px 0;">
+                <button class="btn" onclick="addMemory()">
+                    <i class="fas fa-plus"></i> Ajouter ce souvenir
+                </button>
+                <button class="btn btn-secondary" onclick="nextStep(3)">
+                    Passer aux photos <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+            
+            <h3>Souvenirs ajoutés :</h3>
+            <div id="memoriesList">
+                <!-- Les souvenirs seront ajoutés ici -->
+            </div>
+        </section>
+        
+        <!-- Étape 3 : Photos -->
+        <section id="step3-section" class="section">
+            <h2><i class="fas fa-images"></i> Ajoutez vos Photos</h2>
+            <p class="instructions">Téléchargez des photos de vos moments ensemble (max 6 photos).</p>
+            
+            <div class="photo-upload-area" onclick="document.getElementById('photoInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <h3>Cliquez pour ajouter des photos</h3>
+                <p>ou glissez-déposez vos images ici</p>
+                <p style="font-size: 0.9rem; color: #666;">Formats acceptés: JPG, PNG, GIF (max 5MB)</p>
+            </div>
+            
+            <input type="file" id="photoInput" accept="image/*" multiple style="display: none;" onchange="handlePhotoUpload(event)">
+            
+            <div class="preview-gallery" id="photoGallery">
+                <!-- Les prévisualisations de photos apparaîtront ici -->
+            </div>
+            
+            <div style="text-align: right; margin-top: 30px;">
+                <button class="btn btn-secondary" onclick="prevStep(2)">
+                    <i class="fas fa-arrow-left"></i> Retour aux souvenirs
+                </button>
+                <button class="btn" onclick="nextStep(4)">
+                    Générer le QR Code <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+        
+        <!-- Étape 4 : QR Code -->
+        <section id="step4-section" class="section">
+            <h2><i class="fas fa-qrcode"></i> Votre QR Code Personnalisé</h2>
+            <p class="instructions">Partagez ce QR Code avec votre partenaire. En le scannant, il/elle pourra voir tous vos souvenirs et messages.</p>
+            
+            <div class="qr-container">
+                <h3>Votre création est prête !</h3>
+                <p>Scannez ce code avec un smartphone pour voir votre création</p>
+                
+                <div class="qr-code" id="qrCodeContainer">
+                    <!-- QR Code généré dynamiquement -->
                 </div>
                 
-                <div style="text-align: center; margin: 40px 0;">
-                    <button class="nav-btn" id="mainHeart" style="font-size: 1.5rem; padding: 20px 40px;">
-                        <i class="fas fa-heart"></i> Envoyer un cœur
+                <div class="share-buttons">
+                    <button class="btn" onclick="downloadQRCode()">
+                        <i class="fas fa-download"></i> Télécharger QR Code
                     </button>
-                    <div style="margin-top: 20px; font-size: 1.2rem;" id="heartCounter">Cœurs envoyés : <span id="count">0</span></div>
+                    <button class="btn btn-success" onclick="shareViaWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Partager sur WhatsApp
+                    </button>
+                    <button class="btn" style="background: #7289da;" onclick="copyLink()">
+                        <i class="fas fa-link"></i> Copier le lien
+                    </button>
                 </div>
-            </section>
-            
-            <!-- Section Message -->
-            <section id="message" class="section">
-                <h2><i class="fas fa-heart"></i> Message d'Amour</h2>
-                <textarea id="loveMessage" style="width:100%; height:150px; padding:15px; border-radius:10px; border:2px solid #ffc3a0; margin:20px 0;" placeholder="Écris ton message d'amour ici...">Ma chérie, je t'aime plus que tout. Tu es la lumière de ma vie.</textarea>
-                <button class="nav-btn" onclick="sendMessage()" style="width:100%;">
-                    <i class="fas fa-paper-plane"></i> Envoyer ce message
-                </button>
-            </section>
-            
-            <!-- Section Souvenirs -->
-            <section id="memories" class="section">
-                <h2><i class="fas fa-memory"></i> Nos Souvenirs</h2>
-                <div style="display:flex; gap:10px; margin:20px 0;">
-                    <input type="text" id="memoryInput" placeholder="Notre premier rendez-vous..." style="flex:1; padding:12px; border:2px solid #ffc3a0; border-radius:10px;">
-                    <button class="nav-btn" onclick="addMemory()">Ajouter</button>
-                </div>
-                <ul id="memoriesList" style="list-style:none;">
-                    <li style="background:#fff0f6; padding:15px; margin:10px 0; border-radius:10px; border-left:4px solid #ff4d8d;">Notre rencontre - 14 juin 2022</li>
-                    <li style="background:#fff0f6; padding:15px; margin:10px 0; border-radius:10px; border-left:4px solid #ff4d8d;">Premier voyage ensemble - août 2022</li>
-                </ul>
-            </section>
-            
-            <!-- Section QR Code -->
-            <section id="qr" class="section">
-                <h2><i class="fas fa-qrcode"></i> QR Code de Partage</h2>
-                <p>Scannez ce code avec votre téléphone pour ouvrir l'application :</p>
-                <div id="qrCodeContainer" style="width:200px; height:200px; margin:20px auto; padding:10px; background:white; border-radius:10px;"></div>
-                <button class="nav-btn" onclick="downloadQR()" style="margin-top:20px;">
-                    <i class="fas fa-download"></i> Télécharger le QR Code
-                </button>
-            </section>
-            
-            <!-- Section GitHub -->
-            <section id="github" class="section">
-                <h2><i class="fab fa-github"></i> À propos de GitHub Pages</h2>
-                <div class="github-instructions">
-                    <h3>Cette application est hébergée gratuitement sur GitHub Pages</h3>
-                    <p>Pour créer votre propre application :</p>
-                    <ol>
-                        <li>Créez un compte sur <a href="https://github.com" target="_blank">GitHub</a></li>
-                        <li>Créez un nouveau repository</li>
-                        <li>Nommez-le : <code>votre-nom-app</code></li>
-                        <li>Uploadez ce fichier HTML</li>
-                        <li>Renommez-le en <code>index.html</code></li>
-                        <li>Allez dans Settings → Pages</li>
-                        <li>Choisissez la branche <code>main</code></li>
-                        <li>Votre URL sera : <code>https://votrepseudo.github.io/votre-nom-app/</code></li>
+                
+                <div id="generatedUrl" style="margin: 20px 0; padding: 10px; background: white; border-radius: 10px; word-break: break-all; font-family: monospace;"></div>
+                
+                <div class="instructions">
+                    <h4><i class="fas fa-mobile-alt"></i> Comment partager :</h4>
+                    <ol style="text-align: left;">
+                        <li>Téléchargez le QR Code</li>
+                        <li>Envoyez-le à votre partenaire par message</li>
+                        <li>Votre partenaire le scanne avec son téléphone</li>
+                        <li>Il/elle verra tous vos souvenirs et messages !</li>
                     </ol>
                 </div>
-            </section>
-        </main>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn btn-secondary" onclick="prevStep(3)">
+                    <i class="fas fa-arrow-left"></i> Modifier les photos
+                </button>
+                <button class="btn" onclick="regenerateQR()">
+                    <i class="fas fa-sync-alt"></i> Régénérer QR Code
+                </button>
+            </div>
+        </section>
         
-        <footer style="text-align:center; margin:40px 0; color:#9d4edd;">
-            <p>Créé avec ❤️ pour la Saint-Valentin • Hébergé sur GitHub Pages</p>
-            <p style="margin-top:10px; font-size:0.9rem;">
-                URL : <span id="footerUrl"></span>
-            </p>
+        <footer>
+            <p>Créé avec ❤️ pour la Saint-Valentin</p>
+            <p style="font-size: 0.9rem; margin-top: 10px;">Votre partenaire sera ému(e) par cette attention !</p>
         </footer>
     </div>
 
     <script>
-        // Afficher l'URL actuelle
-        const currentUrl = window.location.href;
-        document.getElementById('appUrl').textContent = currentUrl;
-        document.getElementById('footerUrl').textContent = currentUrl;
+        // Données de l'application
+        let appData = {
+            partnerName: '',
+            yourName: '',
+            anniversary: '',
+            loveMessage: '',
+            memories: [],
+            photos: []
+        };
         
-        // Générer des cœurs en arrière-plan
-        function createHearts() {
-            const heartsBg = document.getElementById('heartsBg');
-            for (let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.innerHTML = '<i class="fas fa-heart"></i>';
-                heart.style.left = `${Math.random() * 100}%`;
-                heart.style.animationDelay = `${Math.random() * 8}s`;
-                heart.style.fontSize = `${Math.random() * 20 + 10}px`;
-                heartsBg.appendChild(heart);
+        let currentStep = 1;
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStepIndicator();
+            
+            // Charger les données sauvegardées
+            const savedData = localStorage.getItem('valentineCreatorData');
+            if (savedData) {
+                appData = JSON.parse(savedData);
+                loadSavedData();
+            }
+        });
+        
+        // Navigation entre étapes
+        function nextStep(step) {
+            // Sauvegarder les données de l'étape actuelle
+            saveCurrentStepData();
+            
+            // Masquer l'étape actuelle
+            document.getElementById(`step${currentStep}-section`).classList.remove('active');
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            
+            // Afficher la nouvelle étape
+            currentStep = step;
+            document.getElementById(`step${currentStep}-section`).classList.add('active');
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // Mettre à jour l'indicateur de progression
+            updateStepIndicator();
+            
+            // Si on arrive à l'étape 4, générer le QR Code
+            if (step === 4) {
+                generateQRCode();
             }
         }
         
-        // Navigation
-        document.querySelectorAll('.nav-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.section').forEach(section => section.classList.remove('active'));
-                button.classList.add('active');
-                document.getElementById(button.dataset.section).classList.add('active');
+        function prevStep(step) {
+            nextStep(step);
+        }
+        
+        function updateStepIndicator() {
+            const steps = document.querySelectorAll('.step');
+            const progress = (currentStep / 4) * 100;
+            
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            
+            steps.forEach((step, index) => {
+                const stepNum = index + 1;
+                if (stepNum < currentStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                } else if (stepNum === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('active', 'completed');
+                }
             });
-        });
+        }
         
-        // Compteur de cœurs
-        let heartCount = 0;
-        document.getElementById('mainHeart').addEventListener('click', () => {
-            heartCount++;
-            document.getElementById('count').textContent = heartCount;
-            document.getElementById('mainHeart').style.animation = 'none';
-            setTimeout(() => {
-                document.getElementById('mainHeart').style.animation = 'pulse 0.4s';
-            }, 10);
-        });
+        // Sauvegarder les données de l'étape actuelle
+        function saveCurrentStepData() {
+            switch(currentStep) {
+                case 1:
+                    appData.partnerName = document.getElementById('partnerName').value;
+                    appData.yourName = document.getElementById('yourName').value;
+                    appData.anniversary = document.getElementById('anniversary').value;
+                    appData.loveMessage = document.getElementById('loveMessage').value;
+                    break;
+                case 2:
+                    // Les souvenirs sont ajoutés via addMemory()
+                    break;
+                case 3:
+                    // Les photos sont gérées via handlePhotoUpload()
+                    break;
+            }
+            
+            // Sauvegarder dans le localStorage
+            localStorage.setItem('valentineCreatorData', JSON.stringify(appData));
+        }
         
-        // Souvenirs
+        // Charger les données sauvegardées
+        function loadSavedData() {
+            document.getElementById('partnerName').value = appData.partnerName || '';
+            document.getElementById('yourName').value = appData.yourName || '';
+            document.getElementById('anniversary').value = appData.anniversary || '';
+            document.getElementById('loveMessage').value = appData.loveMessage || '';
+            
+            // Charger les souvenirs
+            if (appData.memories && appData.memories.length > 0) {
+                appData.memories.forEach(memory => {
+                    addMemoryToUI(memory);
+                });
+            }
+        }
+        
+        // Gestion des souvenirs
         function addMemory() {
-            const input = document.getElementById('memoryInput');
-            if (input.value.trim()) {
-                const li = document.createElement('li');
-                li.textContent = `${input.value} - ${new Date().toLocaleDateString('fr-FR')}`;
-                li.style.background = '#fff0f6';
-                li.style.padding = '15px';
-                li.style.margin = '10px 0';
-                li.style.borderRadius = '10px';
-                li.style.borderLeft = '4px solid #ff4d8d';
-                document.getElementById('memoriesList').prepend(li);
-                input.value = '';
+            const title = document.getElementById('memoryTitle').value.trim();
+            const date = document.getElementById('memoryDate').value;
+            const description = document.getElementById('memoryDescription').value.trim();
+            const emotion = document.getElementById('memoryEmotion').value;
+            
+            if (!title || !description) {
+                alert('Veuillez remplir au moins le titre et la description du souvenir.');
+                return;
             }
+            
+            const memory = {
+                id: Date.now(),
+                title,
+                date: date || new Date().toISOString().split('T')[0],
+                description,
+                emotion
+            };
+            
+            appData.memories.push(memory);
+            addMemoryToUI(memory);
+            
+            // Réinitialiser les champs
+            document.getElementById('memoryTitle').value = '';
+            document.getElementById('memoryDate').value = '';
+            document.getElementById('memoryDescription').value = '';
+            
+            localStorage.setItem('valentineCreatorData', JSON.stringify(appData));
         }
         
-        // Message d'amour
-        function sendMessage() {
-            const message = document.getElementById('loveMessage').value;
-            alert(`Message envoyé : "${message.substring(0, 50)}..." ❤️`);
+        function addMemoryToUI(memory) {
+            const memoriesList = document.getElementById('memoriesList');
+            
+            const memoryCard = document.createElement('div');
+            memoryCard.className = 'memory-card';
+            memoryCard.innerHTML = `
+                <div class="memory-date">
+                    <strong>${memory.emotion}</strong> • ${new Date(memory.date).toLocaleDateString('fr-FR')}
+                </div>
+                <h4>${memory.title}</h4>
+                <p>${memory.description}</p>
+                <button onclick="removeMemory(${memory.id})" style="background: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+                    <i class="fas fa-trash"></i> Supprimer
+                </button>
+            `;
+            
+            memoriesList.appendChild(memoryCard);
         }
         
-        // Copier l'URL
-        function copyUrl() {
-            navigator.clipboard.writeText(currentUrl).then(() => {
-                alert('URL copiée ! Collez-la pour partager.');
-            });
+        function removeMemory(id) {
+            appData.memories = appData.memories.filter(memory => memory.id !== id);
+            localStorage.setItem('valentineCreatorData', JSON.stringify(appData));
+            
+            // Recharger l'interface
+            document.getElementById('memoriesList').innerHTML = '';
+            appData.memories.forEach(memory => addMemoryToUI(memory));
         }
         
-        // QR Code dynamique
+        // Gestion des photos
+        function handlePhotoUpload(event) {
+            const files = event.target.files;
+            const photoGallery = document.getElementById('photoGallery');
+            
+            for (let i = 0; i < Math.min(files.length, 6 - appData.photos.length); i++) {
+                const file = files[i];
+                
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(`La photo ${file.name} dépasse la taille maximale de 5MB`);
+                    continue;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const photoData = {
+                        id: Date.now() + i,
+                        name: file.name,
+                        dataUrl: e.target.result
+                    };
+                    
+                    appData.photos.push(photoData);
+                    addPhotoToUI(photoData);
+                    
+                    if (i === Math.min(files.length, 6 - appData.photos.length) - 1) {
+                        localStorage.setItem('valentineCreatorData', JSON.stringify(appData));
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+            
+            // Réinitialiser l'input
+            event.target.value = '';
+        }
+        
+        function addPhotoToUI(photo) {
+            const photoGallery = document.getElementById('photoGallery');
+            
+            const photoContainer = document.createElement('div');
+            photoContainer.className = 'photo-preview';
+            photoContainer.innerHTML = `
+                <img src="${photo.dataUrl}" alt="${photo.name}">
+                <button class="remove-photo" onclick="removePhoto(${photo.id})">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            photoGallery.appendChild(photoContainer);
+        }
+        
+        function removePhoto(id) {
+            appData.photos = appData.photos.filter(photo => photo.id !== id);
+            localStorage.setItem('valentineCreatorData', JSON.stringify(appData));
+            
+            // Recharger l'interface
+            document.getElementById('photoGallery').innerHTML = '';
+            appData.photos.forEach(photo => addPhotoToUI(photo));
+        }
+        
+        // Génération du QR Code
         function generateQRCode() {
+            // Créer un identifiant unique pour cette création
+            const creationId = 'valentine-' + Date.now();
+            
+            // Sauvegarder la création complète
+            const creationData = {
+                id: creationId,
+                timestamp: new Date().toISOString(),
+                data: appData
+            };
+            
+            localStorage.setItem(creationId, JSON.stringify(creationData));
+            
+            // Générer une URL pour accéder à la création
+            const viewerUrl = `${window.location.origin}${window.location.pathname}?view=${creationId}`;
+            
+            // Afficher l'URL
+            document.getElementById('generatedUrl').textContent = viewerUrl;
+            
+            // Générer le QR Code
             const qrContainer = document.getElementById('qrCodeContainer');
             qrContainer.innerHTML = '';
             
-            // Utiliser une API gratuite
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(currentUrl)}&color=ff4d8d&bgcolor=fff0f6`;
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(viewerUrl)}&color=ff4d8d&bgcolor=fff0f6&qzone=2`;
             
             const img = document.createElement('img');
             img.src = qrUrl;
-            img.alt = 'QR Code pour l\'application';
+            img.alt = 'QR Code pour votre création romantique';
             qrContainer.appendChild(img);
+            
+            // Sauvegarder l'URL dans le localStorage pour y accéder plus tard
+            localStorage.setItem('lastCreationUrl', viewerUrl);
         }
         
-        // Télécharger QR Code
-        function downloadQR() {
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(currentUrl)}&color=ff4d8d&bgcolor=ffffff&format=png`;
+        function regenerateQR() {
+            generateQRCode();
+            alert('QR Code régénéré avec succès !');
+        }
+        
+        // Fonctions de partage
+        function downloadQRCode() {
+            const qrUrl = document.querySelector('#qrCodeContainer img').src;
             const link = document.createElement('a');
             link.href = qrUrl;
-            link.download = 'saint-valentin-qr.png';
+            link.download = 'mon-cadeau-saint-valentin.png';
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            
+            alert('QR Code téléchargé ! Envoyez-le à votre partenaire.');
         }
         
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', () => {
-            createHearts();
-            generateQRCode();
+        function shareViaWhatsApp() {
+            const viewerUrl = document.getElementById('generatedUrl').textContent;
+            const message = `❤️ J'ai créé une surprise pour toi pour la Saint-Valentin !\n\nScanne ce QR Code ou ouvre ce lien :\n${viewerUrl}\n\nJe t'aime !`;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        function copyLink() {
+            const viewerUrl = document.getElementById('generatedUrl').textContent;
+            navigator.clipboard.writeText(viewerUrl).then(() => {
+                alert('Lien copié dans le presse-papier ! Partagez-le avec votre partenaire.');
+            });
+        }
+        
+        // Vérifier si on doit afficher une création
+        function checkForViewerMode() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const viewId = urlParams.get('view');
             
-            // Pour GitHub Pages : afficher une notification
-            if (currentUrl.includes('github.io')) {
-                console.log('✅ Application hébergée sur GitHub Pages');
-                console.log('📱 URL mobile :', currentUrl);
+            if (viewId) {
+                // Afficher la création
+                const creationData = localStorage.getItem(viewId);
+                if (creationData) {
+                    displayCreation(JSON.parse(creationData));
+                }
             }
-        });
+        }
+        
+        function displayCreation(creationData) {
+            // Cette fonction affiche la création pour le partenaire
+            // Pour l'instant, afficher simplement un message
+            alert(`Mode visualisation activé pour la création de ${creationData.data.yourName} !`);
+            
+            // Vous pouvez développer cette fonction pour afficher
+            // une belle interface de visualisation
+        }
+        
+        // Vérifier au chargement
+        checkForViewerMode();
     </script>
 </body>
 </html>
