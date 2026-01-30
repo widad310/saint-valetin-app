@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Créateur de Souvenirs Romantiques - Saint-Valentin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Librairie QR Code -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -81,7 +83,6 @@
             padding-bottom: 10px;
         }
         
-        /* Styles pour le Créateur */
         .form-group {
             margin-bottom: 20px;
         }
@@ -213,7 +214,6 @@
             cursor: pointer;
         }
         
-        /* Styles pour le Visualiseur */
         .memory-display {
             background: #fff0f6;
             border-radius: 15px;
@@ -261,7 +261,7 @@
             border: 3px solid #ffc3a0;
         }
         
-        .qr-code img {
+        #qrCanvas {
             width: 100%;
             height: 100%;
         }
@@ -290,6 +290,26 @@
             border: 2px solid #ffc3a0;
             font-style: italic;
             line-height: 1.6;
+        }
+        
+        .url-display {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+            word-break: break-all;
+            border: 2px solid #ffc3a0;
+        }
+        
+        .url-display code {
+            background: #f8f9fa;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            color: #d63384;
+            display: block;
+            margin: 10px 0;
         }
         
         footer {
@@ -356,17 +376,17 @@
             
             <div class="form-group">
                 <label for="creator-name">Votre nom :</label>
-                <input type="text" id="creator-name" placeholder="Comment votre partenaire vous appelle">
+                <input type="text" id="creator-name" placeholder="Comment votre partenaire vous appelle" value="Jean">
             </div>
             
             <div class="form-group">
                 <label for="partner-name">Nom de votre partenaire :</label>
-                <input type="text" id="partner-name" placeholder="Le nom de la personne que vous aimez">
+                <input type="text" id="partner-name" placeholder="Le nom de la personne que vous aimez" value="Marie">
             </div>
             
             <div class="form-group">
                 <label for="relationship-date">Date de votre rencontre :</label>
-                <input type="date" id="relationship-date">
+                <input type="date" id="relationship-date" value="2023-06-14">
             </div>
             
             <div style="text-align: right;">
@@ -382,7 +402,7 @@
             
             <div class="form-group">
                 <label for="love-message">Votre message d'amour :</label>
-                <textarea id="love-message" placeholder="Écrivez un message touchant pour votre partenaire...">Mon amour, chaque jour avec toi est un cadeau. En cette Saint-Valentin, je voulais te montrer à quel point tu comptes pour moi. Je t'aime plus que tout.</textarea>
+                <textarea id="love-message" placeholder="Écrivez un message touchant pour votre partenaire...">Ma chérie Marie, chaque jour avec toi est un cadeau. En cette Saint-Valentin, je voulais te montrer à quel point tu comptes pour moi. Je t'aime plus que tout au monde.</textarea>
             </div>
             
             <div style="display: flex; justify-content: space-between;">
@@ -434,6 +454,13 @@
             <h3>Souvenirs ajoutés :</h3>
             <div id="memories-list">
                 <!-- Les souvenirs seront ajoutés ici -->
+                <div class="memory-card">
+                    <div class="memory-date">
+                        <strong>❤️ Amour</strong> • 14/06/2023
+                    </div>
+                    <h4>Notre première rencontre</h4>
+                    <p>Je me souviens de ce jour où nos regards se sont croisés pour la première fois. C'était magique.</p>
+                </div>
             </div>
             
             <div style="display: flex; justify-content: space-between; margin-top: 30px;">
@@ -477,8 +504,16 @@
                     <h3><i class="fas fa-qrcode"></i> Votre création est prête !</h3>
                     <p>Partagez ce QR Code avec votre partenaire :</p>
                     
-                    <div class="qr-code" id="qr-code-container">
-                        <!-- QR Code généré ici -->
+                    <div class="qr-code">
+                        <canvas id="qrCanvas"></canvas>
+                    </div>
+                    
+                    <div class="url-display">
+                        <p><strong>Lien à partager :</strong></p>
+                        <code id="share-link">Le lien apparaîtra ici...</code>
+                        <button class="btn" onclick="copyShareLink()" style="width: 100%;">
+                            <i class="fas fa-copy"></i> Copier le lien
+                        </button>
                     </div>
                     
                     <div class="share-buttons">
@@ -488,17 +523,17 @@
                         <button class="btn btn-success" onclick="shareViaWhatsApp()">
                             <i class="fab fa-whatsapp"></i> Partager sur WhatsApp
                         </button>
-                        <button class="btn btn-secondary" onclick="copyShareLink()">
-                            <i class="fas fa-link"></i> Copier le lien
+                        <button class="btn btn-secondary" onclick="saveCreation()">
+                            <i class="fas fa-save"></i> Sauvegarder ma création
                         </button>
                     </div>
                     
                     <div class="instructions">
                         <h4><i class="fas fa-mobile-alt"></i> Comment partager :</h4>
                         <ol style="text-align: left; margin-left: 20px;">
-                            <li>Téléchargez le QR Code</li>
-                            <li>Envoyez-le à votre partenaire par message</li>
-                            <li>Il/elle le scanne avec son téléphone</li>
+                            <li>Copiez le lien ci-dessus et envoyez-le à votre partenaire</li>
+                            <li>OU téléchargez le QR Code et envoyez l'image</li>
+                            <li>Votre partenaire ouvre le lien ou scanne le QR Code</li>
                             <li>Il/elle découvrira votre belle surprise !</li>
                         </ol>
                     </div>
@@ -530,14 +565,21 @@
                         <li>Votre partenaire doit avoir créé une surprise pour vous</li>
                         <li>Il/elle vous enverra un QR Code ou un lien</li>
                         <li>Scannez le QR Code avec votre téléphone</li>
-                        <li>Ou ouvrez simplement le lien qu'il/elle vous envoie</li>
+                        <li>Ou collez le lien ci-dessous :</li>
                     </ol>
+                    
+                    <div style="margin-top: 20px;">
+                        <input type="text" id="viewer-link-input" placeholder="Collez le lien ici..." style="width: 100%; padding: 12px; border: 2px solid #ffc3a0; border-radius: 10px;">
+                        <button class="btn" onclick="loadFromInput()" style="width: 100%; margin-top: 10px;">
+                            <i class="fas fa-eye"></i> Voir la surprise
+                        </button>
+                    </div>
                 </div>
                 
-                <div style="margin-top: 30px;">
-                    <button class="btn" onclick="loadFromUrl()">
-                        <i class="fas fa-link"></i> J'ai un lien direct
-                    </button>
+                <div id="test-links" style="margin-top: 30px;">
+                    <p style="color: #666; font-size: 0.9rem;">
+                        <i class="fas fa-lightbulb"></i> Pour tester : générez d'abord une création en mode "Créateur"
+                    </p>
                 </div>
             </div>
         </div>
@@ -549,24 +591,48 @@
     </footer>
 
     <script>
-        // ========== PARTIE CRÉATEUR ==========
+        // ========== VARIABLES GLOBALES ==========
         let creatorData = {
             creatorName: '',
             partnerName: '',
             relationshipDate: '',
             loveMessage: '',
-            memories: [],
+            memories: [
+                {
+                    id: 1,
+                    title: "Notre première rencontre",
+                    date: "2023-06-14",
+                    description: "Je me souviens de ce jour où nos regards se sont croisés pour la première fois. C'était magique.",
+                    emotion: "❤️ Amour"
+                }
+            ],
             photos: []
         };
         
         let currentStep = 1;
+        let currentCreationId = null;
         
-        // Navigation entre étapes
+        // ========== INITIALISATION ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Charger les données depuis le localStorage
+            loadFromLocalStorage();
+            
+            // Vérifier si on doit afficher une création
+            checkForViewerMode();
+            
+            // Initialiser les valeurs par défaut
+            if (!creatorData.creatorName) {
+                document.getElementById('creator-name').value = '';
+                document.getElementById('partner-name').value = '';
+            }
+        });
+        
+        // ========== PARTIE CRÉATEUR ==========
+        
         function nextCreatorStep(step) {
-            // Sauvegarder les données de l'étape actuelle
             saveCreatorStepData();
             
-            // Masquer l'étape actuelle
+            // Masquer toutes les étapes
             document.querySelectorAll('.creator-step').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
             
@@ -574,6 +640,9 @@
             currentStep = step;
             document.getElementById(`creator-step${step}`).classList.add('active');
             document.getElementById(`step${step}`).classList.add('active');
+            
+            // Sauvegarder dans le localStorage
+            saveToLocalStorage();
         }
         
         function saveCreatorStepData() {
@@ -584,10 +653,8 @@
             } else if (currentStep === 2) {
                 creatorData.loveMessage = document.getElementById('love-message').value;
             }
-            // Les souvenirs et photos sont sauvegardés séparément
         }
         
-        // Gestion des souvenirs
         function addMemory() {
             const title = document.getElementById('memory-title').value.trim();
             const date = document.getElementById('memory-date').value;
@@ -614,6 +681,8 @@
             document.getElementById('memory-title').value = '';
             document.getElementById('memory-date').value = '';
             document.getElementById('memory-description').value = '';
+            
+            saveToLocalStorage();
         }
         
         function displayMemory(memory) {
@@ -637,9 +706,9 @@
             creatorData.memories = creatorData.memories.filter(m => m.id !== id);
             document.getElementById('memories-list').innerHTML = '';
             creatorData.memories.forEach(displayMemory);
+            saveToLocalStorage();
         }
         
-        // Gestion des photos
         function handlePhotoUpload(event) {
             const files = event.target.files;
             const preview = document.getElementById('photos-preview');
@@ -660,9 +729,12 @@
                     
                     creatorData.photos.push(photo);
                     displayPhoto(photo);
+                    saveToLocalStorage();
                 };
                 reader.readAsDataURL(file);
             }
+            
+            event.target.value = '';
         }
         
         function displayPhoto(photo) {
@@ -679,20 +751,75 @@
         }
         
         function removePhoto(id) {
-            creatorData.photos = creatorData.photos.filter(p => p.id !== id);
+            creatorData.photos = creatorData.photos.filter(p => p.id != id);
             document.getElementById('photos-preview').innerHTML = '';
             creatorData.photos.forEach(displayPhoto);
+            saveToLocalStorage();
         }
         
-        // Génération de la création
+        // ========== GÉNÉRATION DE LA CRÉATION ==========
+        
         function generateCreation() {
             // Sauvegarder toutes les données
             saveCreatorStepData();
+            saveToLocalStorage();
             
-            // Créer un ID unique pour cette création
-            const creationId = 'valentine_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            // Vérifier que les champs obligatoires sont remplis
+            if (!creatorData.creatorName || !creatorData.partnerName) {
+                alert('Veuillez remplir au moins votre nom et celui de votre partenaire');
+                nextCreatorStep(1);
+                return;
+            }
             
-            // Préparer les données complètes
+            // Générer un ID unique
+            currentCreationId = 'valentine_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            
+            // Créer l'URL de partage
+            const shareUrl = generateShareUrl(currentCreationId);
+            
+            // Afficher le lien
+            document.getElementById('share-link').textContent = shareUrl;
+            
+            // Générer le QR Code
+            generateQRCode(shareUrl);
+            
+            // Afficher la section QR Code
+            document.getElementById('qr-section').style.display = 'block';
+            
+            // Sauvegarder la création
+            saveCreationData(currentCreationId);
+            
+            // Scroller vers le QR Code
+            document.getElementById('qr-section').scrollIntoView({ behavior: 'smooth' });
+            
+            alert('🎉 Votre création est prête ! Copiez le lien ou téléchargez le QR Code pour le partager.');
+        }
+        
+        function generateShareUrl(creationId) {
+            const baseUrl = window.location.origin + window.location.pathname;
+            return `${baseUrl}?view=${creationId}`;
+        }
+        
+        function generateQRCode(url) {
+            const canvas = document.getElementById('qrCanvas');
+            QRCode.toCanvas(canvas, url, {
+                width: 220,
+                margin: 2,
+                color: {
+                    dark: '#ff4d8d',
+                    light: '#fff0f6'
+                }
+            }, function(error) {
+                if (error) {
+                    console.error('Erreur génération QR Code:', error);
+                    // Fallback vers API externe
+                    const qrContainer = document.querySelector('.qr-code');
+                    qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(url)}&color=ff4d8d&bgcolor=fff0f6" alt="QR Code">`;
+                }
+            });
+        }
+        
+        function saveCreationData(creationId) {
             const creationData = {
                 id: creationId,
                 timestamp: new Date().toISOString(),
@@ -702,57 +829,87 @@
             // Sauvegarder dans le localStorage
             localStorage.setItem(creationId, JSON.stringify(creationData));
             
-            // Générer l'URL de partage
-            const shareUrl = `${window.location.origin}${window.location.pathname}?view=${creationId}`;
-            
-            // Afficher le QR Code
-            displayQRCode(shareUrl);
-            
-            // Sauvegarder l'URL pour partage
-            window.lastShareUrl = shareUrl;
+            // Sauvegarder la liste des créations
+            let creations = JSON.parse(localStorage.getItem('valentine_creations') || '[]');
+            if (!creations.includes(creationId)) {
+                creations.push(creationId);
+                localStorage.setItem('valentine_creations', JSON.stringify(creations));
+            }
         }
         
-        function displayQRCode(url) {
-            const qrContainer = document.getElementById('qr-code-container');
-            qrContainer.innerHTML = '';
-            
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(url)}&color=ff4d8d&bgcolor=fff0f6&qzone=2`;
-            
-            const img = document.createElement('img');
-            img.src = qrUrl;
-            img.alt = 'QR Code pour votre création';
-            qrContainer.appendChild(img);
-            
-            // Afficher la section QR Code
-            document.getElementById('qr-section').style.display = 'block';
-            
-            // Scroller vers le QR Code
-            document.getElementById('qr-section').scrollIntoView({ behavior: 'smooth' });
-        }
-        
-        // Partage
-        function downloadQRCode() {
-            const img = document.querySelector('#qr-code-container img');
-            const link = document.createElement('a');
-            link.href = img.src;
-            link.download = 'surprise-saint-valentin.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-        
-        function shareViaWhatsApp() {
-            const message = `❤️ J'ai créé une surprise spéciale pour toi pour la Saint-Valentin !\n\nOuvre ce lien pour la découvrir :\n${window.lastShareUrl}\n\nJe t'aime !`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
-        }
+        // ========== FONCTIONS DE PARTAGE ==========
         
         function copyShareLink() {
-            navigator.clipboard.writeText(window.lastShareUrl).then(() => {
-                alert('Lien copié ! Partagez-le avec votre partenaire.');
+            const link = document.getElementById('share-link').textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                alert('✅ Lien copié ! Envoyez-le à votre partenaire.');
+            }).catch(err => {
+                console.error('Erreur copie:', err);
+                // Fallback pour anciens navigateurs
+                const textArea = document.createElement('textarea');
+                textArea.value = link;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('✅ Lien copié ! Envoyez-le à votre partenaire.');
             });
         }
         
+        function downloadQRCode() {
+            const canvas = document.getElementById('qrCanvas');
+            const link = document.createElement('a');
+            link.download = `surprise-saint-valentin-${creatorData.partnerName}.png`;
+            link.href = canvas.toDataURL('image/png');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            alert('✅ QR Code téléchargé ! Envoyez l\'image à votre partenaire.');
+        }
+        
+        function shareViaWhatsApp() {
+            const link = document.getElementById('share-link').textContent;
+            const message = `❤️ ${creatorData.creatorName} a créé une surprise spéciale pour toi pour la Saint-Valentin !\n\nOuvre ce lien pour la découvrir :\n${link}\n\nJe t'aime !`;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
+        function saveCreation() {
+            const link = document.getElementById('share-link').textContent;
+            localStorage.setItem('last_creation_link', link);
+            alert('✅ Création sauvegardée ! Vous pourrez y accéder plus tard.');
+        }
+        
+        // ========== LOCAL STORAGE ==========
+        
+        function saveToLocalStorage() {
+            localStorage.setItem('valentine_creator_data', JSON.stringify(creatorData));
+        }
+        
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('valentine_creator_data');
+            if (saved) {
+                creatorData = JSON.parse(saved);
+                
+                // Mettre à jour les champs du formulaire
+                document.getElementById('creator-name').value = creatorData.creatorName || '';
+                document.getElementById('partner-name').value = creatorData.partnerName || '';
+                document.getElementById('relationship-date').value = creatorData.relationshipDate || '';
+                document.getElementById('love-message').value = creatorData.loveMessage || '';
+                
+                // Recharger les souvenirs
+                document.getElementById('memories-list').innerHTML = '';
+                creatorData.memories.forEach(displayMemory);
+                
+                // Recharger les photos
+                document.getElementById('photos-preview').innerHTML = '';
+                creatorData.photos.forEach(displayPhoto);
+            }
+        }
+        
         // ========== PARTIE VISUALISEUR ==========
+        
         function switchMode(mode) {
             // Mettre à jour les boutons
             document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
@@ -762,36 +919,37 @@
             document.getElementById('creator-container').classList.remove('active');
             document.getElementById('viewer-container').classList.remove('active');
             document.getElementById(`${mode}-container`).classList.add('active');
+        }
+        
+        function loadFromInput() {
+            const link = document.getElementById('viewer-link-input').value.trim();
+            if (!link) {
+                alert('Veuillez coller un lien');
+                return;
+            }
             
-            // Si on passe en mode visualiseur, vérifier si on a un ID dans l'URL
-            if (mode === 'viewer') {
-                checkForViewerId();
+            try {
+                const url = new URL(link);
+                const viewId = url.searchParams.get('view');
+                
+                if (viewId) {
+                    loadCreation(viewId);
+                } else {
+                    alert('Lien invalide. Assurez-vous que c\'est bien un lien de création.');
+                }
+            } catch (error) {
+                alert('URL invalide. Veuillez copier-coller exactement le lien.');
             }
         }
         
-        function checkForViewerId() {
+        function checkForViewerMode() {
             const urlParams = new URLSearchParams(window.location.search);
             const viewId = urlParams.get('view');
             
             if (viewId) {
+                // Passer automatiquement en mode visualiseur
+                switchMode('viewer');
                 loadCreation(viewId);
-            }
-        }
-        
-        function loadFromUrl() {
-            const url = prompt('Collez le lien que votre partenaire vous a envoyé :');
-            if (url) {
-                try {
-                    const urlObj = new URL(url);
-                    const viewId = urlObj.searchParams.get('view');
-                    if (viewId) {
-                        loadCreation(viewId);
-                    } else {
-                        alert('Lien invalide. Assurez-vous que c\'est le bon lien.');
-                    }
-                } catch {
-                    alert('URL invalide. Veuillez copier-coller exactement le lien.');
-                }
             }
         }
         
@@ -799,12 +957,16 @@
             const creationData = localStorage.getItem(creationId);
             
             if (!creationData) {
-                alert('Création non trouvée. Vérifiez que le lien est correct.');
+                alert('❌ Création non trouvée. Vérifiez que le lien est correct ou demandez à votre partenaire de vous renvoyer le lien.');
                 return;
             }
             
-            const creation = JSON.parse(creationData);
-            displayCreation(creation);
+            try {
+                const creation = JSON.parse(creationData);
+                displayCreation(creation);
+            } catch (error) {
+                alert('❌ Erreur de chargement de la création.');
+            }
         }
         
         function displayCreation(creation) {
@@ -820,13 +982,10 @@
                     <p style="color: #9d4edd; font-size: 1.2rem;">
                         Pour ${data.partnerName} ❤️
                     </p>
+                    ${data.relationshipDate ? `<p style="color: #666; margin-top: 5px;">
+                        <i class="fas fa-calendar-alt"></i> Depuis le ${new Date(data.relationshipDate).toLocaleDateString('fr-FR')}
+                    </p>` : ''}
                 </div>
-                
-                ${data.relationshipDate ? `
-                <div class="instructions" style="text-align: center;">
-                    <p><i class="fas fa-calendar-alt"></i> Depuis le ${new Date(data.relationshipDate).toLocaleDateString('fr-FR')}</p>
-                </div>
-                ` : ''}
                 
                 <div class="love-letter">
                     <h3><i class="fas fa-envelope-open-text"></i> Message de ${data.creatorName}</h3>
@@ -844,7 +1003,7 @@
                         <p>${memory.description}</p>
                     </div>
                 `).join('')}
-                ` : ''}
+                ` : '<p class="instructions">Aucun souvenir ajouté.</p>'}
                 
                 ${data.photos.length > 0 ? `
                 <h2><i class="fas fa-images"></i> Vos Photos</h2>
@@ -861,22 +1020,18 @@
                     </div>
                     <h3>Avec tout mon amour</h3>
                     <p style="font-size: 1.2rem; margin-top: 10px;">${data.creatorName}</p>
+                    <p style="color: #666; margin-top: 10px; font-size: 0.9rem;">
+                        Créé le ${new Date(creation.timestamp).toLocaleDateString('fr-FR')}
+                    </p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button class="btn" onclick="switchMode('creator')">
+                        <i class="fas fa-plus-circle"></i> Créer ma propre surprise
+                    </button>
                 </div>
             `;
         }
-        
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            // Vérifier si on doit afficher directement une création
-            const urlParams = new URLSearchParams(window.location.search);
-            const viewId = urlParams.get('view');
-            
-            if (viewId) {
-                // Passer automatiquement en mode visualiseur
-                switchMode('viewer');
-                loadCreation(viewId);
-            }
-        });
     </script>
 </body>
 </html>
